@@ -22,6 +22,10 @@
   const Config = win.SiteConfig || {};
 
   let scrollTriggers = [];
+  let loaderHidden = false;
+  let loaderFallbackTimer = null;
+  let scrollLockY = 0;
+  let pageScrollLocked = false;
 
 
   
@@ -200,6 +204,78 @@
 
 
 
+  function unlockPageScroll() {
+    if (!doc.body) return;
+
+    doc.body.classList.remove(
+      "menu-open"
+    );
+
+    if (pageScrollLocked) {
+      doc.body.style.position = "";
+      doc.body.style.top = "";
+      doc.body.style.left = "";
+      doc.body.style.right = "";
+      doc.body.style.width = "";
+
+      win.requestAnimationFrame(() => {
+        win.scrollTo(0, scrollLockY);
+      });
+    }
+
+    doc.documentElement.style.overflow = "";
+    doc.body.style.overflow = "";
+    doc.documentElement.style.height = "";
+    doc.body.style.height = "";
+
+    pageScrollLocked = false;
+  }
+
+  function lockPageScroll() {
+    if (!doc.body || pageScrollLocked) return;
+
+    scrollLockY =
+      win.scrollY ||
+      win.pageYOffset ||
+      doc.scrollingElement?.scrollTop ||
+      doc.documentElement.scrollTop ||
+      0;
+
+    pageScrollLocked = true;
+
+    doc.body.classList.add(
+      "menu-open"
+    );
+
+    doc.body.style.position = "fixed";
+    doc.body.style.top =
+      `-${scrollLockY}px`;
+    doc.body.style.left = "0";
+    doc.body.style.right = "0";
+    doc.body.style.width = "100%";
+  }
+
+  function restoreBodyScroll() {
+    if (!doc.body) return;
+
+    doc.body.classList.remove(
+      "is-loading"
+    );
+
+    if (
+      !doc.body.classList.contains(
+        "menu-open"
+      )
+    ) {
+      doc.documentElement.style.overflow = "";
+      doc.body.style.overflow = "";
+      doc.documentElement.style.height = "";
+      doc.body.style.height = "";
+    }
+  }
+
+
+
   function getLoaderElements() {
     const loader =
       qs(".page-loader");
@@ -245,13 +321,26 @@
   }
 
   function hideInitialLoader() {
+    if (loaderHidden) {
+      restoreBodyScroll();
+      return;
+    }
+
+    loaderHidden = true;
+
+    if (loaderFallbackTimer) {
+      win.clearTimeout(
+        loaderFallbackTimer
+      );
+
+      loaderFallbackTimer = null;
+    }
+
     const elements =
       getLoaderElements();
 
     if (!elements) {
-      doc.body?.classList.remove(
-        "is-loading"
-      );
+      restoreBodyScroll();
       return;
     }
 
@@ -268,9 +357,7 @@
 
       loader.style.display = "none";
 
-      doc.body?.classList.remove(
-        "is-loading"
-      );
+      restoreBodyScroll();
 
       return;
     }
@@ -286,45 +373,52 @@
       visibility: "visible"
     });
 
-    win.gsap.timeline({
-      defaults: {
-        ease: "power3.out"
-      }
-    })
-      .to(state, {
-        progress: 100,
-        duration: 0.85,
-
-        onUpdate: () => {
-          setLoaderProgress(
-            elements,
-            state.progress
-          );
+    try {
+      win.gsap.timeline({
+        defaults: {
+          ease: "power3.out"
         }
       })
-      .to(
-        loader,
-        {
-          yPercent: -100,
-          duration: 0.72,
-          ease: "power4.inOut",
+        .to(state, {
+          progress: 100,
+          duration: 0.85,
 
-          onComplete: () => {
-            loader.classList.add(
-              "is-hidden"
+          onUpdate: () => {
+            setLoaderProgress(
+              elements,
+              state.progress
             );
-
-            doc.body?.classList.remove(
-              "is-loading"
-            );
-
-            win.gsap.set(loader, {
-              yPercent: 100
-            });
           }
-        },
-        "+=0.08"
+        })
+        .to(
+          loader,
+          {
+            yPercent: -100,
+            duration: 0.72,
+            ease: "power4.inOut",
+
+            onComplete: () => {
+              loader.classList.add(
+                "is-hidden"
+              );
+
+              restoreBodyScroll();
+
+              win.gsap.set(loader, {
+                yPercent: 100
+              });
+            }
+          },
+          "+=0.08"
+        );
+    } catch {
+      loader.classList.add(
+        "is-hidden"
       );
+
+      loader.style.display = "none";
+      restoreBodyScroll();
+    }
   }
 
   function isInternalPageLink(link) {
@@ -398,6 +492,8 @@
       win.location.href = url;
       return;
     }
+
+    loaderHidden = false;
 
     const {
       loader,
@@ -513,9 +609,7 @@
             "none";
         }
 
-        doc.body?.classList.remove(
-          "is-loading"
-        );
+        restoreBodyScroll();
       }
     );
   }
@@ -578,6 +672,15 @@
     if (!toggle || !menu) return;
 
     const closeMenu = () => {
+      if (
+        !menu.classList.contains(
+          "is-open"
+        )
+      ) {
+        unlockPageScroll();
+        return;
+      }
+
       toggle.classList.remove(
         "is-active"
       );
@@ -586,9 +689,7 @@
         "is-open"
       );
 
-      doc.body.classList.remove(
-        "menu-open"
-      );
+      unlockPageScroll();
 
       toggle.setAttribute(
         "aria-expanded",
@@ -602,6 +703,14 @@
     };
 
     const openMenu = () => {
+      if (
+        menu.classList.contains(
+          "is-open"
+        )
+      ) {
+        return;
+      }
+
       toggle.classList.add(
         "is-active"
       );
@@ -610,9 +719,9 @@
         "is-open"
       );
 
-      doc.body.classList.add(
-        "menu-open"
-      );
+      menu.scrollTop = 0;
+
+      lockPageScroll();
 
       toggle.setAttribute(
         "aria-expanded",
@@ -676,6 +785,11 @@
           closeMenu();
         }
       }
+    );
+
+    win.addEventListener(
+      "pagehide",
+      closeMenu
     );
   }
 
@@ -1202,25 +1316,37 @@
 
 
 
+  function safeInit(callback) {
+    if (typeof callback !== "function") return;
+
+    try {
+      callback();
+    } catch (error) {
+      win.console?.warn?.(
+        "AutoGlass init failed:",
+        error
+      );
+    }
+  }
+
+
+
   function init() {
-    applyConfig();
-
-    registerGsap();
-
-    initHeader();
-    initMenu();
-    initActiveNavigation();
-
-    initAos();
-    initGlobalMotion();
-
-    initCookieCard();
-    initBackToTop();
-    initContactForms();
-
-    secureExternalLinks();
-    initResizeRefresh();
-    initPageTransitions();
+    [
+      applyConfig,
+      registerGsap,
+      initHeader,
+      initMenu,
+      initActiveNavigation,
+      initAos,
+      initGlobalMotion,
+      initCookieCard,
+      initBackToTop,
+      initContactForms,
+      secureExternalLinks,
+      initResizeRefresh,
+      initPageTransitions
+    ].forEach(safeInit);
   }
 
   if (
@@ -1263,6 +1389,39 @@
       }
     );
   }
+
+  loaderFallbackTimer =
+    win.setTimeout(
+      hideInitialLoader,
+      4200
+    );
+
+  win.addEventListener(
+    "error",
+    (event) => {
+      const target =
+        event.target;
+
+      if (
+        target &&
+        target !== win &&
+        ["IMG", "SCRIPT", "LINK"].includes(
+          target.tagName
+        )
+      ) {
+        win.setTimeout(
+          hideInitialLoader,
+          120
+        );
+      }
+    },
+    true
+  );
+
+  win.addEventListener(
+    "pagehide",
+    restoreBodyScroll
+  );
 
 
   

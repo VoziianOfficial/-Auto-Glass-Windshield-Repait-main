@@ -1318,34 +1318,38 @@
 
 
 
+  function safeInit(callback) {
+    if (typeof callback !== "function") return;
+
+    try {
+      callback();
+    } catch (error) {
+      win.console?.warn?.(
+        "AutoGlass service init failed:",
+        error
+      );
+    }
+  }
+
+
+
   function init() {
-    initServiceHero();
-
-    initServiceMarquee();
-
-    initServiceParallax();
-
-    initOverviewMotion();
-
-    initFeatureMotion();
-
-    initTypeCardsMotion();
-
-    initBlueprint();
-
-    initProcessSwiper();
-
-    initDetailTabs();
-
-    initBenefitsMotion();
-
-    initGallerySwiper();
-
-    initServiceFaq();
-
-    initCtaMotion();
-
-    initRelatedMotion();
+    [
+      initServiceHero,
+      initServiceMarquee,
+      initServiceParallax,
+      initOverviewMotion,
+      initFeatureMotion,
+      initTypeCardsMotion,
+      initBlueprint,
+      initProcessSwiper,
+      initDetailTabs,
+      initBenefitsMotion,
+      initGallerySwiper,
+      initServiceFaq,
+      initCtaMotion,
+      initRelatedMotion
+    ].forEach(safeInit);
 
     win.setTimeout(
       refreshMotion,

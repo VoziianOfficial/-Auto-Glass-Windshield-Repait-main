@@ -41,6 +41,7 @@
 
 
     if (
+      doc.body &&
       !doc.body.classList.contains("menu-open") &&
       !doc.body.classList.contains("is-loading")
     ) {
@@ -384,18 +385,30 @@
 
 
 
+  function safeInit(callback) {
+    if (typeof callback !== "function") return;
+
+    try {
+      callback();
+    } catch (error) {
+      win.console?.warn?.(
+        "AutoGlass legal init failed:",
+        error
+      );
+    }
+  }
+
+
+
   function init() {
-    ensureLegalScroll();
-
-    initSidebarNavigation();
-
-    initActiveSections();
-
-    initTables();
-
-    initLegalMotion();
-
-    initHashPosition();
+    [
+      ensureLegalScroll,
+      initSidebarNavigation,
+      initActiveSections,
+      initTables,
+      initLegalMotion,
+      initHashPosition
+    ].forEach(safeInit);
 
     win.setTimeout(
       ensureLegalScroll,

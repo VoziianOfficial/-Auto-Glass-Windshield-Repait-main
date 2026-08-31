@@ -1101,12 +1101,14 @@
       ".home-testimonials"
     );
 
+    if (!section) return;
+
     const element = qs(
       ".home-testimonials__swiper",
       section
     );
 
-    if (!section || !element || !hasSwiper()) return;
+    if (!element || !hasSwiper()) return;
 
     const count =
       getSlideCount(element);
@@ -1365,32 +1367,37 @@
 
 
 
+  function safeInit(callback) {
+    if (typeof callback !== "function") return;
+
+    try {
+      callback();
+    } catch (error) {
+      win.console?.warn?.(
+        "AutoGlass page init failed:",
+        error
+      );
+    }
+  }
+
+
+
   function init() {
-    initHeroSwiper();
-
-    initMarquees();
-
-    initServicesSwiper();
-
-    initBlueprintMarkers();
-
-    initGlassTechTabs();
-
-    initParallax();
-
-    initStatementReveal();
-
-    initGallerySwiper();
-
-    initBeforeAfter();
-
-    initTestimonialsSwiper();
-
-    initFaq();
-
-    initBlueprintMotion();
-
-    initContactMotion();
+    [
+      initHeroSwiper,
+      initMarquees,
+      initServicesSwiper,
+      initBlueprintMarkers,
+      initGlassTechTabs,
+      initParallax,
+      initStatementReveal,
+      initGallerySwiper,
+      initBeforeAfter,
+      initTestimonialsSwiper,
+      initFaq,
+      initBlueprintMotion,
+      initContactMotion
+    ].forEach(safeInit);
 
     win.setTimeout(
       refreshMotion,
