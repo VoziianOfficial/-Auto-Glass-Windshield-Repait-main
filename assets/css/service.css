@@ -24,7 +24,7 @@
 
 .service-hero {
   position: relative;
-  min-height: min(860px, calc(100svh - var(--header-height)));
+  min-height: min(680px, calc(82svh - var(--header-height)));
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -74,8 +74,8 @@
   grid-template-columns: minmax(0, 1fr) minmax(250px, 0.3fr);
   gap: 50px;
   align-items: end;
-  padding-top: clamp(110px, 13vh, 190px);
-  padding-bottom: clamp(58px, 8vh, 105px);
+  padding-top: clamp(90px, 10vh, 140px);
+  padding-bottom: clamp(44px, 6vh, 72px);
 }
 
 .service-hero__inner > * {
@@ -1487,7 +1487,7 @@
 
 @media (max-width: 900px) {
   .service-hero {
-    min-height: 720px;
+    min-height: 600px;
   }
 
   .service-hero__inner {
@@ -1590,7 +1590,7 @@
 
 @media (max-width: 640px) {
   .service-hero {
-    min-height: 690px;
+    min-height: 560px;
   }
 
   .service-overview__aside,
@@ -1601,11 +1601,11 @@
 
   .service-hero__inner {
     display: flex;
-    min-height: 690px;
+    min-height: 560px;
     flex-direction: column;
     justify-content: flex-end;
-    padding-top: 90px;
-    padding-bottom: 88px;
+    padding-top: 82px;
+    padding-bottom: 58px;
   }
 
   .service-hero__topline {
