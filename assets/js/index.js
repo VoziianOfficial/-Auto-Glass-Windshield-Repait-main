@@ -139,20 +139,21 @@
         reduceMotion ||
         !win.gsap
       ) {
-        progressBar.style.width = "100%";
+        progressBar.style.transform = "scaleX(1)";
         return;
       }
 
       progressTween?.kill();
 
       win.gsap.set(progressBar, {
-        width: "0%"
+        scaleX: 0,
+        transformOrigin: "left center"
       });
 
       progressTween = win.gsap.to(
         progressBar,
         {
-          width: "100%",
+          scaleX: 1,
           duration: duration / 1000,
           ease: "none"
         }
@@ -373,6 +374,8 @@
     if (!marquees.length) return;
 
     marquees.forEach((section) => {
+      if (isInitialized(section, "marqueeInitialized")) return;
+
       const track = qs(
         ".home-marquee__track",
         section
@@ -384,6 +387,8 @@
       );
 
       if (!track || !groups.length) return;
+
+      markInitialized(section, "marqueeInitialized");
 
       if (groups.length === 1) {
         const clone =
@@ -406,9 +411,20 @@
 
       let position = 0;
       let lastTime = performance.now();
+      let frameId = 0;
       let paused = false;
+      let inView = true;
+      let pageVisible = !doc.hidden;
+      let groupWidth = 0;
 
       const speed = 42;
+
+      const measure = () => {
+        groupWidth = groups[0]?.offsetWidth || 0;
+      };
+
+      const shouldRun = () =>
+        !paused && inView && pageVisible;
 
       const animate = (time) => {
         const delta =
@@ -419,26 +435,21 @@
 
         lastTime = time;
 
-        if (!paused) {
+        if (shouldRun()) {
           position -= speed * delta;
 
-          const firstWidth =
-            groups[0]?.offsetWidth || 0;
-
           if (
-            firstWidth > 0 &&
-            Math.abs(position) >= firstWidth
+            groupWidth > 0 &&
+            Math.abs(position) >= groupWidth
           ) {
-            position += firstWidth;
+            position += groupWidth;
           }
 
           track.style.transform =
             `translate3d(${position}px, 0, 0)`;
         }
 
-        requestAnimationFrame(
-          animate
-        );
+        frameId = requestAnimationFrame(animate);
       };
 
       section.addEventListener(
@@ -455,7 +466,40 @@
         }
       );
 
-      requestAnimationFrame(
+      doc.addEventListener(
+        "visibilitychange",
+        () => {
+          pageVisible = !doc.hidden;
+          lastTime = performance.now();
+        }
+      );
+
+      win.addEventListener(
+        "resize",
+        measure,
+        {
+          passive: true
+        }
+      );
+
+      if ("IntersectionObserver" in win) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            inView =
+              entry?.isIntersecting ?? true;
+            lastTime = performance.now();
+          },
+          {
+            rootMargin: "160px 0px"
+          }
+        );
+
+        observer.observe(section);
+      }
+
+      measure();
+
+      frameId = requestAnimationFrame(
         animate
       );
     });
@@ -558,6 +602,8 @@
 
     if (!section) return;
 
+    if (isInitialized(section, "blueprintInitialized")) return;
+
     const markers = qsa(
       ".blueprint-marker",
       section
@@ -569,6 +615,8 @@
     );
 
     if (!markers.length || !panel) return;
+
+    markInitialized(section, "blueprintInitialized");
 
     const panelLabel = qs(
       ".home-blueprint__detail-label",
@@ -816,6 +864,10 @@
       return;
     }
 
+    if (isInitialized(doc.body, "homeParallaxInitialized")) return;
+
+    markInitialized(doc.body, "homeParallaxInitialized");
+
     qsa(
       ".home-parallax__media img"
     ).forEach((image) => {
@@ -903,6 +955,10 @@
     );
 
     if (!words.length) return;
+
+    if (isInitialized(text, "statementInitialized")) return;
+
+    markInitialized(text, "statementInitialized");
 
     win.gsap.fromTo(
       words,
@@ -1047,25 +1103,14 @@
         const ratio =
           value / 100;
 
-        before.style.width =
-          `${value}%`;
-
-        handle.style.left =
-          `${value}%`;
-
         slider.style.setProperty(
           "--before-position",
           `${value}%`
         );
 
         slider.style.setProperty(
-          "--before-ratio",
-          String(ratio)
-        );
-
-        slider.style.setProperty(
-          "--before-image-width",
-          `${100 / ratio}%`
+          "--before-x",
+          `${slider.clientWidth * ratio}px`
         );
 
         slider.setAttribute(
@@ -1090,6 +1135,16 @@
 
         update(percent);
       };
+
+      win.addEventListener(
+        "resize",
+        () => {
+          update(value);
+        },
+        {
+          passive: true
+        }
+      );
 
       slider.addEventListener(
         "pointerdown",
@@ -1384,6 +1439,10 @@
 
     if (!image || !section) return;
 
+    if (isInitialized(section, "blueprintMotionInitialized")) return;
+
+    markInitialized(section, "blueprintMotionInitialized");
+
     win.gsap.fromTo(
       image,
       {
@@ -1424,6 +1483,10 @@
     ) {
       return;
     }
+
+    if (isInitialized(section, "contactMotionInitialized")) return;
+
+    markInitialized(section, "contactMotionInitialized");
 
     const content = qs(
       ".home-contact__content",

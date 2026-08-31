@@ -12,7 +12,7 @@
 
 .service-main {
   position: relative;
-  overflow-x: clip;
+  overflow-x: visible;
   overflow-y: visible;
   background: var(--color-white);
 }
@@ -516,11 +516,12 @@
   width: 38px;
   height: 2px;
   background: var(--color-red);
-  transition: width var(--transition);
+  transform-origin: left center;
+  transition: transform var(--transition);
 }
 
 .service-type-card:hover .service-type-card__line {
-  width: 74px;
+  transform: scaleX(1.95);
 }
 
 
@@ -1144,7 +1145,7 @@
 
 .service-faq {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: var(--color-white);
 }
 

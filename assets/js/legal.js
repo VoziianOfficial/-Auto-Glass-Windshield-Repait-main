@@ -314,12 +314,22 @@
 
     if (!article) return;
 
+    if (
+      article.dataset.legalMotionInitialized ===
+      "true"
+    ) {
+      return;
+    }
+
     const sections = qsa(
       ".legal-section",
       article
     );
 
     if (!sections.length) return;
+
+    article.dataset.legalMotionInitialized =
+      "true";
 
     sections.forEach(
       (section) => {

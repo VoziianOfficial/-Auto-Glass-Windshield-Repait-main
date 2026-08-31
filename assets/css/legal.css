@@ -12,7 +12,7 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow-x: clip;
+  overflow-x: visible;
   overflow-y: visible;
   background: var(--color-white);
 }
@@ -117,7 +117,7 @@
 
 .legal-content {
   position: relative;
-  overflow-x: clip;
+  overflow-x: visible;
   overflow-y: visible;
   background: var(--color-off-white);
 }
@@ -762,7 +762,7 @@
   }
 
   body {
-    overflow-x: clip;
+    overflow-x: visible;
     overflow-y: auto;
   }
 
@@ -775,7 +775,7 @@
 
   .legal-main {
     min-height: 100%;
-    overflow-x: clip;
+    overflow-x: visible;
     overflow-y: visible;
   }
 
@@ -801,7 +801,7 @@
   }
 
   .legal-content {
-    overflow-x: clip;
+    overflow-x: visible;
     overflow-y: visible;
   }
 

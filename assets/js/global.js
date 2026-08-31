@@ -26,6 +26,8 @@
   let loaderFallbackTimer = null;
   let scrollLockY = 0;
   let pageScrollLocked = false;
+  let aosInitialized = false;
+  let globalMotionInitialized = false;
 
 
   
@@ -464,7 +466,10 @@
               restoreBodyScroll();
 
               win.gsap.set(loader, {
-                yPercent: 100
+                display: "none",
+                yPercent: 0,
+                opacity: 0,
+                visibility: "hidden"
               });
             }
           },
@@ -928,17 +933,19 @@
 
 
   function initAos() {
-    if (!win.AOS) return;
+    if (!win.AOS || aosInitialized) return;
+
+    aosInitialized = true;
 
     win.AOS.init({
-      duration: 720,
+      duration: 560,
       easing:
         "cubic-bezier(0.22, 1, 0.36, 1)",
       once: true,
       mirror: false,
-      offset: 40,
+      offset: 28,
       anchorPlacement:
-        "top-bottom",
+      "top-bottom",
       disable: () =>
         prefersReducedMotion
     });
@@ -951,6 +958,7 @@
 
   function initGlobalMotion() {
     if (
+      globalMotionInitialized ||
       prefersReducedMotion ||
       !win.gsap ||
       !win.ScrollTrigger
@@ -958,7 +966,7 @@
       return;
     }
 
-    
+    globalMotionInitialized = true;
 
 
 
@@ -967,21 +975,28 @@
 
     qsa("[data-gsap-reveal]").forEach(
       (element) => {
+        if (
+          element.hasAttribute("data-aos") ||
+          element.closest("[data-aos]")
+        ) {
+          return;
+        }
+
         const animation =
           win.gsap.fromTo(
             element,
             {
-              y: 34,
+              y: 22,
               opacity: 0
             },
             {
               y: 0,
               opacity: 1,
-              duration: 0.9,
+              duration: 0.62,
               ease: "power3.out",
               scrollTrigger: {
                 trigger: element,
-                start: "top 88%",
+                start: "top 90%",
                 once: true
               }
             }
@@ -995,6 +1010,13 @@
 
     qsa("[data-gsap-line]").forEach(
       (element) => {
+        if (
+          element.hasAttribute("data-aos") ||
+          element.closest("[data-aos]")
+        ) {
+          return;
+        }
+
         const animation =
           win.gsap.fromTo(
             element,
@@ -1005,7 +1027,7 @@
             },
             {
               scaleX: 1,
-              duration: 1,
+              duration: 0.7,
               ease: "power3.out",
               scrollTrigger: {
                 trigger: element,

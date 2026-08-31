@@ -98,6 +98,10 @@
       return;
     }
 
+    if (isInitialized(hero, "heroMotionInitialized")) return;
+
+    markInitialized(hero, "heroMotionInitialized");
+
     const topline = qs(
       ".service-hero__topline",
       hero
@@ -226,6 +230,8 @@
     if (!sections.length) return;
 
     sections.forEach((section) => {
+      if (isInitialized(section, "marqueeInitialized")) return;
+
       const track = qs(
         ".service-marquee__track",
         section
@@ -239,6 +245,8 @@
       );
 
       if (!groups.length) return;
+
+      markInitialized(section, "marqueeInitialized");
 
       if (groups.length === 1) {
         const clone =
@@ -264,8 +272,20 @@
         performance.now();
 
       let paused = false;
+      let inView = true;
+      let pageVisible = !doc.hidden;
+      let frameId = 0;
+      let groupWidth = 0;
 
       const speed = 40;
+
+      const measure = () => {
+        groupWidth =
+          groups[0]?.offsetWidth || 0;
+      };
+
+      const shouldRun = () =>
+        !paused && inView && pageVisible;
 
       const frame = (time) => {
         const delta = Math.min(
@@ -275,24 +295,21 @@
 
         previous = time;
 
-        if (!paused) {
+        if (shouldRun()) {
           x -= speed * delta;
 
-          const width =
-            groups[0]?.offsetWidth || 0;
-
           if (
-            width > 0 &&
-            Math.abs(x) >= width
+            groupWidth > 0 &&
+            Math.abs(x) >= groupWidth
           ) {
-            x += width;
+            x += groupWidth;
           }
 
           track.style.transform =
             `translate3d(${x}px,0,0)`;
         }
 
-        requestAnimationFrame(frame);
+        frameId = requestAnimationFrame(frame);
       };
 
       section.addEventListener(
@@ -309,7 +326,40 @@
         }
       );
 
-      requestAnimationFrame(frame);
+      doc.addEventListener(
+        "visibilitychange",
+        () => {
+          pageVisible = !doc.hidden;
+          previous = performance.now();
+        }
+      );
+
+      win.addEventListener(
+        "resize",
+        measure,
+        {
+          passive: true
+        }
+      );
+
+      if ("IntersectionObserver" in win) {
+        const observer = new IntersectionObserver(
+          ([entry]) => {
+            inView =
+              entry?.isIntersecting ?? true;
+            previous = performance.now();
+          },
+          {
+            rootMargin: "160px 0px"
+          }
+        );
+
+        observer.observe(section);
+      }
+
+      measure();
+
+      frameId = requestAnimationFrame(frame);
     });
   }
 
@@ -327,15 +377,11 @@
       return;
     }
 
+    if (isInitialized(doc.body, "serviceParallaxInitialized")) return;
+
+    markInitialized(doc.body, "serviceParallaxInitialized");
+
     const parallaxItems = [
-      {
-        selector:
-          ".service-hero__media img",
-        trigger:
-          ".service-hero",
-        from: -2,
-        to: 4
-      },
       {
         selector:
           ".service-feature__media img",
@@ -408,6 +454,10 @@
     ) {
       return;
     }
+
+    if (isInitialized(section, "overviewMotionInitialized")) return;
+
+    markInitialized(section, "overviewMotionInitialized");
 
     const title = qs(
       ".service-overview__title",
@@ -512,6 +562,13 @@
       return;
     }
 
+    const section =
+      cards[0].closest(".service-types");
+
+    if (isInitialized(section, "typeCardsMotionInitialized")) return;
+
+    markInitialized(section, "typeCardsMotionInitialized");
+
     win.gsap.fromTo(
       cards,
       {
@@ -526,8 +583,7 @@
         ease: "power3.out",
 
         scrollTrigger: {
-          trigger: cards[0]
-            .closest(".service-types"),
+          trigger: section,
           start: "top 80%",
           once: true
         }
@@ -547,6 +603,8 @@
 
     if (!section) return;
 
+    if (isInitialized(section, "blueprintInitialized")) return;
+
     const markers = qsa(
       ".service-blueprint__marker",
       section
@@ -560,6 +618,8 @@
     if (!markers.length || !panel) {
       return;
     }
+
+    markInitialized(section, "blueprintInitialized");
 
     const label = qs(
       ".service-blueprint__panel-label",
@@ -984,6 +1044,10 @@
       return;
     }
 
+    if (isInitialized(section, "benefitsMotionInitialized")) return;
+
+    markInitialized(section, "benefitsMotionInitialized");
+
     win.gsap.fromTo(
       cards,
       {
@@ -1197,6 +1261,10 @@
       return;
     }
 
+    if (isInitialized(section, "featureMotionInitialized")) return;
+
+    markInitialized(section, "featureMotionInitialized");
+
     const content = qs(
       ".service-feature__content",
       section
@@ -1272,6 +1340,10 @@
       return;
     }
 
+    if (isInitialized(section, "ctaMotionInitialized")) return;
+
+    markInitialized(section, "ctaMotionInitialized");
+
     const title = qs(
       ".service-cta__title",
       section
@@ -1336,6 +1408,15 @@
       return;
     }
 
+    const section =
+      cards[0].closest(
+        ".related-services"
+      );
+
+    if (isInitialized(section, "relatedMotionInitialized")) return;
+
+    markInitialized(section, "relatedMotionInitialized");
+
     win.gsap.fromTo(
       cards,
       {
@@ -1350,10 +1431,7 @@
         ease: "power3.out",
 
         scrollTrigger: {
-          trigger:
-            cards[0].closest(
-              ".related-services"
-            ),
+          trigger: section,
           start: "top 82%",
           once: true
         }

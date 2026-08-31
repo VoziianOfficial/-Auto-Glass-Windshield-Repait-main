@@ -70,7 +70,7 @@
 html {
   width: 100%;
   max-width: 100%;
-  overflow-x: clip;
+  overflow-x: visible;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--header-height) + 24px);
 }
@@ -80,7 +80,7 @@ body {
   min-width: 320px;
   max-width: 100%;
   margin: 0;
-  overflow-x: clip;
+  overflow-x: visible;
   overflow-y: auto;
 
   background: var(--color-white);
@@ -578,6 +578,9 @@ h4 {
 }
 
 .page-loader.is-hidden {
+  display: none;
+  visibility: hidden;
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -1154,7 +1157,7 @@ h4 {
 }
 
 .swiper-pagination-bullet {
-  width: 26px;
+  width: 46px;
   height: 3px;
 
   margin: 0 3px !important;
@@ -1164,15 +1167,16 @@ h4 {
   border-radius: 0;
 
   opacity: 1;
+  transform: scaleX(0.56);
 
   transition:
-    width var(--transition),
-    background-color var(--transition);
+    background-color var(--transition),
+    transform var(--transition);
 }
 
 .swiper-pagination-bullet-active {
-  width: 46px;
   background: var(--color-red);
+  transform: scaleX(1);
 }
 
 
@@ -1573,8 +1577,12 @@ h4 {
 
 
 
-[data-aos] {
+[data-aos]:not(.aos-animate) {
   will-change: transform, opacity;
+}
+
+[data-aos].aos-animate {
+  will-change: auto;
 }
 
 html:not(.no-js) [data-aos="fade-up"] {
@@ -1591,6 +1599,21 @@ html:not(.no-js) [data-aos="fade-left"] {
 
 html:not(.no-js) [data-aos="fade-right"] {
   transform: translate3d(-24px, 0, 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 
