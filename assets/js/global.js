@@ -71,6 +71,55 @@
     return Config.services?.[key] || null;
   }
 
+  function getFaviconType(path = "") {
+    const cleanPath =
+      path.split(/[?#]/)[0].toLowerCase();
+
+    if (cleanPath.endsWith(".svg")) return "image/svg+xml";
+    if (cleanPath.endsWith(".png")) return "image/png";
+    if (cleanPath.endsWith(".ico")) return "image/x-icon";
+
+    return "";
+  }
+
+  function withVersionQuery(path = "", version = "2") {
+    if (!path) return "";
+
+    const [pathWithoutHash, hash = ""] =
+      path.split("#");
+
+    const separator =
+      pathWithoutHash.includes("?") ? "&" : "?";
+
+    return `${pathWithoutHash}${separator}v=${version}${hash ? `#${hash}` : ""}`;
+  }
+
+  function applyFavicon(path = "") {
+    if (!path) return;
+
+    const iconLinks =
+      qsa('link[rel~="icon"]');
+
+    let faviconLink =
+      iconLinks[0];
+
+    if (!faviconLink) {
+      faviconLink =
+        doc.createElement("link");
+
+      faviconLink.rel = "icon";
+      doc.head.appendChild(faviconLink);
+    }
+
+    iconLinks.slice(1).forEach((link) => {
+      link.remove();
+    });
+
+    faviconLink.rel = "icon";
+    faviconLink.href = withVersionQuery(path);
+    faviconLink.type = getFaviconType(path);
+  }
+
 
   
 
@@ -165,24 +214,7 @@
     }
 
      
-    if (favicon) {
-      let faviconLink =
-        qs('link[rel="icon"]');
-
-      if (!faviconLink) {
-        faviconLink =
-          doc.createElement("link");
-
-        faviconLink.rel = "icon";
-        doc.head.appendChild(faviconLink);
-      }
-
-      faviconLink.href = favicon;
-      faviconLink.type =
-        favicon.endsWith(".svg")
-          ? "image/svg+xml"
-          : "";
-    }
+    applyFavicon(favicon);
 
      
     qsa("[data-config]").forEach((element) => {
