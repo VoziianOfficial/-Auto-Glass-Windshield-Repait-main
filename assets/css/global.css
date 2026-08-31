@@ -2734,6 +2734,32 @@ html:not(.no-js) [data-aos="fade-right"] {
     grid-column: auto;
   }
 
+  .site-footer__links {
+    width: min(100%, 330px);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-items: center;
+    gap: 10px 16px;
+    margin-inline: auto;
+  }
+
+  .site-footer__link {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .site-footer__link:hover {
+    transform: translateY(-2px);
+  }
+
+  .site-footer__email {
+    grid-column: 1 / -1;
+    justify-self: center;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    text-align: center;
+  }
+
   .site-footer__legal {
     justify-content: center;
     flex-wrap: wrap;
