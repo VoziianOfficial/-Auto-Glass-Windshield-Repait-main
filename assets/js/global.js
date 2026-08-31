@@ -367,6 +367,149 @@
     }
   }
 
+  function getHashTarget(hash = win.location.hash) {
+    if (!hash || hash === "#") return null;
+
+    const id =
+      decodeURIComponent(
+        hash.slice(1)
+      );
+
+    if (doc.getElementById(id)) {
+      return doc.getElementById(id);
+    }
+
+    try {
+      return qs(hash);
+    } catch {
+      return null;
+    }
+  }
+
+  function scrollToHashTarget(
+    hash = win.location.hash,
+    behavior = "auto"
+  ) {
+    const target =
+      getHashTarget(hash);
+
+    if (!target) return false;
+
+    const headerHeight =
+      qs(".site-header")
+        ?.offsetHeight || 0;
+
+    const targetTop =
+      target.getBoundingClientRect().top +
+      win.pageYOffset -
+      headerHeight;
+
+    win.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior:
+        prefersReducedMotion
+          ? "auto"
+          : behavior
+    });
+
+    return true;
+  }
+
+  function scheduleHashScroll(
+    hash = win.location.hash
+  ) {
+    if (!hash || hash === "#") return;
+
+    [
+      80,
+      260,
+      700,
+      1300,
+      2200
+    ].forEach((delay) => {
+      win.setTimeout(() => {
+        scrollToHashTarget(
+          hash,
+          "auto"
+        );
+      }, delay);
+    });
+  }
+
+  function initHashNavigation() {
+    doc.addEventListener(
+      "click",
+      (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) {
+          return;
+        }
+
+        const link =
+          event.target.closest('a[href*="#"]');
+
+        if (!link) return;
+
+        let url;
+
+        try {
+          url = new URL(
+            link.href,
+            win.location.href
+          );
+        } catch {
+          return;
+        }
+
+        const sameDocument =
+          url.origin === win.location.origin &&
+          url.pathname === win.location.pathname &&
+          url.search === win.location.search;
+
+        if (
+          !sameDocument ||
+          !url.hash ||
+          !getHashTarget(url.hash)
+        ) {
+          return;
+        }
+
+        event.preventDefault();
+
+        win.history.pushState(
+          null,
+          "",
+          url.hash
+        );
+
+        scrollToHashTarget(
+          url.hash,
+          "smooth"
+        );
+      }
+    );
+
+    if (!win.location.hash) return;
+
+    scheduleHashScroll();
+
+    win.addEventListener(
+      "load",
+      () => {
+        scheduleHashScroll();
+      },
+      {
+        once: true
+      }
+    );
+  }
+
 
 
   function getLoaderElements() {
@@ -451,6 +594,7 @@
       loader.style.display = "none";
 
       restoreBodyScroll();
+      scheduleHashScroll();
 
       return;
     }
@@ -496,6 +640,7 @@
               );
 
               restoreBodyScroll();
+              scheduleHashScroll();
 
               win.gsap.set(loader, {
                 display: "none",
@@ -514,6 +659,7 @@
 
       loader.style.display = "none";
       restoreBodyScroll();
+      scheduleHashScroll();
     }
   }
 
@@ -829,6 +975,99 @@
       );
     };
 
+    const scrollAfterMenuClose = (url) => {
+      const target =
+        url.hash
+          ? qs(url.hash)
+          : null;
+
+      win.requestAnimationFrame(() => {
+        win.requestAnimationFrame(() => {
+          if (
+            target &&
+            scrollToHashTarget(
+              url.hash,
+              "smooth"
+            )
+          ) {
+          } else {
+            win.scrollTo({
+              top: 0,
+              behavior:
+                prefersReducedMotion
+                  ? "auto"
+                  : "smooth"
+            });
+          }
+
+          if (url.hash) {
+            win.history.replaceState(
+              null,
+              "",
+              url.hash
+            );
+          }
+        });
+      });
+    };
+
+    const handleMenuLinkClick = (event) => {
+      if (
+        event.defaultPrevented ||
+        event.button !== 0 ||
+        event.metaKey ||
+        event.ctrlKey ||
+        event.shiftKey ||
+        event.altKey
+      ) {
+        return;
+      }
+
+      const link =
+        event.currentTarget;
+
+      let url;
+
+      try {
+        url = new URL(
+          link.href,
+          win.location.href
+        );
+      } catch {
+        closeMenu();
+        return;
+      }
+
+      if (
+        url.origin !==
+        win.location.origin
+      ) {
+        closeMenu();
+        return;
+      }
+
+      const sameDocument =
+        url.pathname ===
+          win.location.pathname &&
+        url.search ===
+          win.location.search;
+
+      event.preventDefault();
+
+      closeMenu();
+
+      if (sameDocument) {
+        scrollAfterMenuClose(url);
+        return;
+      }
+
+      win.requestAnimationFrame(() => {
+        navigateWithLoader(
+          url.href
+        );
+      });
+    };
+
     const openMenu = () => {
       if (
         menu.classList.contains(
@@ -902,7 +1141,7 @@
       (link) => {
         link.addEventListener(
           "click",
-          closeMenu
+          handleMenuLinkClick
         );
       }
     );
@@ -1517,6 +1756,7 @@
       registerGsap,
       initHeader,
       initMenu,
+      initHashNavigation,
       initActiveNavigation,
       initAos,
       initGlobalMotion,
