@@ -527,6 +527,7 @@
 
 .home-services {
   position: relative;
+  padding-bottom: clamp(36px, 3.5vw, 59px);
   background: var(--color-off-white);
   overflow: hidden;
 }
@@ -680,6 +681,7 @@
 
 .home-accordion__content {
   min-width: 0;
+  order: 2;
 }
 
 .home-accordion__title {
@@ -816,6 +818,7 @@
   align-items: flex-end;
   justify-content: flex-start;
   overflow: visible;
+  order: 1;
 }
 
 .home-accordion__media img {
@@ -847,13 +850,14 @@
 .home-about__media {
   position: relative;
   min-height: 620px;
+  order: 2;
 }
 
 .home-about__photo-main {
   position: absolute;
   top: 0;
-  right: 12%;
-  bottom: 55px;
+  right: 0;
+  bottom: 0;
   left: 0;
   overflow: hidden;
   background: #d8d8d5;
@@ -905,6 +909,7 @@
 
 .home-about__content {
   max-width: 650px;
+  order: 1;
 }
 
 .home-about__title {
@@ -1896,6 +1901,9 @@
 }
 
 .home-contact__content {
+  position: sticky;
+  top: calc(var(--header-height) + 35px);
+  align-self: start;
   max-width: 650px;
 }
 
@@ -2081,6 +2089,14 @@
     gap: 42px;
   }
 
+  .home-accordion__content {
+    order: 1;
+  }
+
+  .home-accordion__media {
+    order: 2;
+  }
+
   .home-accordion__title {
     max-width: 760px;
   }
@@ -2117,7 +2133,12 @@
     gap: 55px;
   }
 
+  .home-about__content {
+    order: 1;
+  }
+
   .home-about__media {
+    order: 2;
     min-height: 620px;
   }
 
@@ -2159,6 +2180,9 @@
   }
 
   .home-contact__content {
+    position: static;
+    top: auto;
+    align-self: auto;
     max-width: 760px;
   }
 }
@@ -2236,6 +2260,10 @@
 
   .home-services__header {
     margin-bottom: 32px;
+  }
+
+  .home-services {
+    padding-bottom: 31px;
   }
 
   .service-card {
@@ -2375,8 +2403,8 @@
   }
 
   .home-about__photo-main {
-    right: 8%;
-    bottom: 42px;
+    right: 0;
+    bottom: 0;
   }
 
   .home-about__photo-small {
