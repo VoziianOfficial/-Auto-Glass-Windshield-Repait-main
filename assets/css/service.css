@@ -70,11 +70,20 @@
 
 .service-hero__inner {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 0.3fr);
+  gap: 50px;
+  align-items: end;
   padding-top: clamp(110px, 13vh, 190px);
   padding-bottom: clamp(58px, 8vh, 105px);
 }
 
+.service-hero__inner > * {
+  min-width: 0;
+}
+
 .service-hero__topline {
+  grid-column: 1;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -96,6 +105,7 @@
 }
 
 .service-hero__title {
+  grid-column: 1;
   max-width: 1000px;
   margin: 0;
   font-size: clamp(70px, 8.2vw, 142px);
@@ -117,24 +127,25 @@
 }
 
 .service-hero__bottom {
-  display: flex;
-  align-items: center;
-  gap: 26px;
-  max-width: 1050px;
+  display: contents;
   margin-top: 32px;
 }
 
 .service-hero__description {
+  grid-column: 1;
   max-width: 440px;
   margin: 0;
+  margin-top: 32px;
   font-size: 15px;
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.67);
 }
 
 .service-hero__meta {
+  grid-column: 2;
+  grid-row: 3;
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   gap: clamp(22px, 3vw, 42px);
 }
 
@@ -450,11 +461,13 @@
 .service-type-card {
   position: relative;
   display: flex;
-  min-height: 360px;
+  min-height: 285px;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 32px;
-  padding: clamp(25px, 3vw, 38px);
+  justify-content: flex-end;
+  gap: 24px;
+  padding: clamp(25px, 3vw, 34px);
+  padding-top: 94px;
+  padding-right: clamp(86px, 8vw, 112px);
   overflow: hidden;
   background: var(--color-white);
   border-right: 1px solid var(--color-line);
@@ -470,6 +483,9 @@
 }
 
 .service-type-card__icon {
+  position: absolute;
+  top: clamp(20px, 2.4vw, 30px);
+  right: clamp(20px, 2.4vw, 30px);
   display: grid;
   width: 58px;
   height: 58px;
@@ -672,7 +688,7 @@
 
 .service-blueprint__panel {
   position: absolute;
-  right: 20px;
+  left: 20px;
   bottom: 20px;
   z-index: 5;
   width: min(360px, calc(100% - 40px));
@@ -991,8 +1007,10 @@
 
 .service-benefit {
   position: relative;
-  min-height: 290px;
+  min-height: 220px;
   padding: 30px;
+  padding-top: 88px;
+  padding-right: 88px;
   overflow: hidden;
   border-right: 1px solid var(--color-line-dark);
   border-bottom: 1px solid var(--color-line-dark);
@@ -1006,11 +1024,13 @@
 }
 
 .service-benefit__icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
   display: grid;
   width: 52px;
   height: 52px;
   place-items: center;
-  margin-bottom: 53px;
   border: 1px solid rgba(255, 255, 255, 0.24);
   transition:
     background-color var(--transition),
@@ -1404,6 +1424,10 @@
 
 
 @media (max-width: 1180px) {
+  .service-hero__inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
   .service-hero__side-label {
     display: none;
   }
@@ -1431,11 +1455,25 @@
     min-height: 720px;
   }
 
+  .service-hero__inner {
+    grid-template-columns: 1fr;
+  }
+
   .service-hero__bottom {
+    display: flex;
+    align-items: center;
+    gap: 26px;
     max-width: 620px;
+    margin-top: 32px;
+  }
+
+  .service-hero__description {
+    margin-top: 0;
   }
 
   .service-hero__meta {
+    grid-column: auto;
+    grid-row: auto;
     justify-content: flex-start;
   }
 
@@ -1631,8 +1669,10 @@
   }
 
   .service-type-card {
-    min-height: 285px;
+    min-height: 235px;
     padding: 24px 21px;
+    padding-top: 86px;
+    padding-right: 88px;
   }
 
   .service-blueprint__stage {
@@ -1640,7 +1680,7 @@
   }
 
   .service-blueprint__panel {
-    right: 14px;
+    left: 14px;
     bottom: 14px;
     width: calc(100% - 28px);
     padding: 16px;
@@ -1712,12 +1752,15 @@
   }
 
   .service-benefit {
-    min-height: 245px;
+    min-height: 205px;
     padding: 25px 21px;
+    padding-top: 80px;
+    padding-right: 84px;
   }
 
   .service-benefit__icon {
-    margin-bottom: 38px;
+    top: 21px;
+    right: 21px;
   }
 
   .service-gallery-card {
