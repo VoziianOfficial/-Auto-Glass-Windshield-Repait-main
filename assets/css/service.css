@@ -257,9 +257,29 @@
   align-items: start;
 }
 
-.service-overview__aside {
+.service-overview__aside,
+.service-overview__media {
   position: sticky;
   top: calc(var(--header-height) + 35px);
+}
+
+.service-overview__media {
+  aspect-ratio: 0.78;
+  min-height: clamp(360px, 38vw, 520px);
+  margin: 0;
+  overflow: hidden;
+  background: #d7d7d4;
+}
+
+.service-overview__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.service-overview__media:hover img {
+  transform: scale(1.035);
 }
 
 .service-overview__label {
@@ -424,6 +444,26 @@
   font-weight: 600;
   line-height: 1.15;
   text-transform: uppercase;
+}
+
+
+
+
+
+
+.section.service-service-cards {
+  padding-block: calc(var(--section-space) / 2);
+}
+
+.service-service-cards .feature-card {
+  padding-top: 46px;
+}
+
+.service-service-cards .feature-card__icon {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  margin-bottom: 0;
 }
 
 
@@ -1791,9 +1831,14 @@
     padding-bottom: 38px;
   }
 
-  .service-overview__aside {
+  .service-overview__aside,
+  .service-overview__media {
     position: sticky;
     top: calc(var(--header-height) + 24px);
+  }
+
+  .service-overview__media {
+    min-height: 360px;
   }
 
   .service-overview__mini {
@@ -1897,9 +1942,14 @@
   }
 
   .service-overview__aside,
+  .service-overview__media,
   .service-faq__intro {
     position: static;
     top: auto;
+  }
+
+  .service-overview__media {
+    min-height: 300px;
   }
 
   .service-hero__inner {
@@ -2000,6 +2050,15 @@
 
   .service-feature__item-text {
     font-size: 15px;
+  }
+
+  .service-service-cards .feature-card {
+    padding-top: 44px;
+  }
+
+  .service-service-cards .feature-card__icon {
+    top: 18px;
+    right: 18px;
   }
 
   .service-types__grid {

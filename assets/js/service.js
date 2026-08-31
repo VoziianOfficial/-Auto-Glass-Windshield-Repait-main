@@ -384,14 +384,6 @@
     const parallaxItems = [
       {
         selector:
-          ".service-feature__media img",
-        trigger:
-          ".service-feature",
-        from: -4,
-        to: 4
-      },
-      {
-        selector:
           ".service-cta__media img",
         trigger:
           ".service-cta",
