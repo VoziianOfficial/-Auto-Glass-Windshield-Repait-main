@@ -1145,6 +1145,9 @@
 }
 
 .service-gallery-card img {
+  position: absolute;
+  inset: 0;
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1158,13 +1161,15 @@
 
 .service-gallery-card__caption {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
-  left: 18px;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: min(320px, calc(100% - 36px));
   padding: 20px;
+  text-align: center;
   background: var(--color-white);
   color: var(--color-black);
-  transform: translateY(10px);
+  transform: translate(-50%, calc(-50% + 10px));
   opacity: 0;
   transition:
     opacity var(--transition),
@@ -1173,7 +1178,7 @@
 
 .service-gallery-card:hover .service-gallery-card__caption {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -50%);
 }
 
 .service-gallery-card__caption-label {
@@ -1797,12 +1802,12 @@
   }
 
   .service-gallery-card__caption {
-    right: 13px;
-    bottom: 13px;
-    left: 13px;
+    top: 50%;
+    left: 50%;
+    width: min(310px, calc(100% - 26px));
     padding: 17px;
     opacity: 1;
-    transform: none;
+    transform: translate(-50%, -50%);
   }
 
   .service-faq__button {
