@@ -776,12 +776,32 @@
 
     menu.dataset.menuInitialized = "true";
 
+    const submenuToggle =
+      qs(".mobile-menu__submenu-toggle", menu);
+
+    const submenu =
+      qs(".mobile-menu__submenu", menu);
+
+    const closeSubmenu = () => {
+      if (!submenuToggle || !submenu) return;
+
+      submenuToggle.setAttribute(
+        "aria-expanded",
+        "false"
+      );
+
+      submenu.classList.remove(
+        "is-open"
+      );
+    };
+
     const closeMenu = () => {
       if (
         !menu.classList.contains(
           "is-open"
         )
       ) {
+        closeSubmenu();
         unlockPageScroll();
         return;
       }
@@ -793,6 +813,8 @@
       menu.classList.remove(
         "is-open"
       );
+
+      closeSubmenu();
 
       unlockPageScroll();
 
@@ -838,6 +860,28 @@
         "false"
       );
     };
+
+    if (submenuToggle && submenu) {
+      submenuToggle.addEventListener(
+        "click",
+        () => {
+          const expanded =
+            submenuToggle.getAttribute(
+              "aria-expanded"
+            ) === "true";
+
+          submenuToggle.setAttribute(
+            "aria-expanded",
+            expanded ? "false" : "true"
+          );
+
+          submenu.classList.toggle(
+            "is-open",
+            !expanded
+          );
+        }
+      );
+    }
 
     toggle.addEventListener(
       "click",
@@ -932,7 +976,7 @@
 
     const hashLinks =
       qsa(
-        '.site-nav__link[href*="#"], .mobile-menu__link[href*="#"]'
+        '.site-nav__link[href*="#"], .mobile-menu__link[href*="#"], .mobile-menu__submenu-link[href*="#"]'
       );
 
     const currentHash =

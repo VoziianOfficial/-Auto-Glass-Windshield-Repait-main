@@ -1629,14 +1629,14 @@
 .glass-plan {
   position: relative;
   overflow: hidden;
-  padding-block: calc(var(--section-space) / 2);
+  padding-block: clamp(30px, 3.6vw, 48px);
   background: var(--color-off-white);
 }
 
 .glass-plan__layout {
   display: grid;
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 0.44fr);
-  min-height: 460px;
+  min-height: 340px;
   overflow: hidden;
   border: 1px solid var(--color-line);
   border-radius: var(--radius-medium);
@@ -1646,22 +1646,22 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(34px, 5vw, 75px);
+  padding: clamp(26px, 3.4vw, 52px);
   background: var(--color-white);
 }
 
 .glass-plan__title {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 
 .glass-plan__copy {
-  margin-bottom: 30px;
+  margin-bottom: 22px;
   color: var(--color-text-soft);
 }
 
 .glass-plan__visual {
   position: relative;
-  min-height: 440px;
+  min-height: 340px;
   overflow: hidden;
   background: #111111;
 }
@@ -2225,7 +2225,7 @@
   }
 
   .glass-plan__visual {
-    min-height: 420px;
+    min-height: 320px;
   }
 
   .home-contact__layout {
@@ -2595,7 +2595,7 @@
   }
 
   .glass-plan__visual {
-    min-height: 360px;
+    min-height: 260px;
   }
 
   .glass-plan__caption {

@@ -322,7 +322,7 @@
       >
         <ul class="mobile-menu__list">
 
-          <li>
+          <li class="mobile-menu__item">
             <a
               class="mobile-menu__link"
               href="index.html"
@@ -331,7 +331,7 @@
             </a>
           </li>
 
-          <li>
+          <li class="mobile-menu__item">
             <a
               class="mobile-menu__link"
               href="index.html#about"
@@ -340,29 +340,48 @@
             </a>
           </li>
 
-          <li>
-            <a
-              class="mobile-menu__link"
-              href="#"
+          <li class="mobile-menu__item mobile-menu__item--submenu">
+            <button
+              class="mobile-menu__link mobile-menu__submenu-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="mobile-services-submenu"
+            >
+              Services
+              <span class="mobile-menu__chevron" aria-hidden="true"></span>
+            </button>
+
+            <div
+              class="mobile-menu__submenu"
+              id="mobile-services-submenu"
+            >
+              <ul class="mobile-menu__submenu-list">
+                <li>
+                  <a
+                    class="mobile-menu__submenu-link"
+                    href="#"
                     data-service-key="windshieldRepair"
-              data-service-label
-            >
-              Service
-            </a>
-          </li>
+                    data-service-name
+                  >
+                    Service
+                  </a>
+                </li>
 
-          <li>
-            <a
-              class="mobile-menu__link"
-              href="#"
+                <li>
+                  <a
+                    class="mobile-menu__submenu-link"
+                    href="#"
                     data-service-key="windshieldReplacement"
-              data-service-label
-            >
-              Service
-            </a>
+                    data-service-name
+                  >
+                    Service
+                  </a>
+                </li>
+              </ul>
+            </div>
           </li>
 
-          <li>
+          <li class="mobile-menu__item">
             <a
               class="mobile-menu__link"
               href="index.html#contact"
@@ -371,22 +390,32 @@
             </a>
           </li>
 
+        
+
         </ul>
       </nav>
 
 
       <div class="mobile-menu__meta">
+        <div class="mobile-menu__meta-visual">
+          <img
+            src="assets/images/home/accordion/premium-vehicle-studio.webp"
+            alt="Premium vehicle glass studio"
+            loading="lazy"
+          >
 
-        <span class="mobile-menu__meta-label">
-          Enquiries
-        </span>
+          <div class="mobile-menu__meta-copy">
+            <span class="mobile-menu__meta-label">
+              Enquiries
+            </span>
 
-        <a
-          class="mobile-menu__email"
-          href="mailto:"
-          data-site-email
-        >Email</a>
-
+            <a
+              class="mobile-menu__email"
+              href="mailto:"
+              data-site-email
+            >Email</a>
+          </div>
+        </div>
       </div>
 
     </div>
