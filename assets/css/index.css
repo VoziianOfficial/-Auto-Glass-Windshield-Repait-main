@@ -1933,7 +1933,7 @@
 
 .home-contact {
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   background: var(--color-black);
   color: var(--color-white);
 }
@@ -1947,9 +1947,11 @@
 
 .home-contact__content {
   position: sticky;
-  top: calc(var(--header-height) + 35px);
+  top: calc(var(--header-height) + 28px);
   align-self: start;
+  height: fit-content;
   max-width: 650px;
+  z-index: 1;
 }
 
 .home-contact__title {
