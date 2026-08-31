@@ -735,6 +735,7 @@
 }
 
 .service-process__swiper {
+  max-width: 100%;
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -1077,6 +1078,7 @@
 }
 
 .service-gallery__swiper {
+  max-width: 100%;
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -1444,7 +1446,8 @@
   }
 
   .service-overview__aside {
-    position: static;
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
   }
 
   .service-overview__mini {
@@ -1498,7 +1501,8 @@
   }
 
   .service-faq__intro {
-    position: static;
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
   }
 
   .related-service-card {
@@ -1514,6 +1518,12 @@
 @media (max-width: 640px) {
   .service-hero {
     min-height: 670px;
+  }
+
+  .service-overview__aside,
+  .service-faq__intro {
+    position: static;
+    top: auto;
   }
 
   .service-hero__inner {

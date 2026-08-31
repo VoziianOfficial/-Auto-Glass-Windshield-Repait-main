@@ -22,6 +22,12 @@
   color: var(--color-white);
 }
 
+.home-hero__shell {
+  position: relative;
+  min-height: inherit;
+  padding-inline: 0;
+}
+
 .home-hero__swiper,
 .home-hero__swiper .swiper-wrapper,
 .home-hero__slide {
@@ -87,6 +93,11 @@
   grid-template-columns: minmax(0, 1fr) minmax(250px, 0.3fr);
   gap: 50px;
   align-items: end;
+}
+
+.home-hero__layout > *,
+.home-testimonials__layout > * {
+  min-width: 0;
 }
 
 .home-hero__content {
@@ -373,6 +384,7 @@
 }
 
 .home-services__swiper {
+  max-width: 100%;
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -1019,6 +1031,7 @@
 }
 
 .home-gallery__swiper {
+  max-width: 100%;
   overflow-x: clip;
   overflow-y: visible;
 }
@@ -1316,6 +1329,7 @@
   grid-template-columns: minmax(260px, 0.42fr) minmax(0, 0.95fr);
   gap: clamp(45px, 7vw, 110px);
   align-items: start;
+  min-height: 560px;
 }
 
 .home-testimonials__heading {
@@ -1344,6 +1358,7 @@
 }
 
 .home-testimonials__swiper {
+  max-width: 100%;
   overflow: hidden;
 }
 
@@ -1740,13 +1755,10 @@
     gap: 45px;
   }
 
-  .home-testimonials {
-    overflow: hidden;
-  }
-
   .home-testimonials__heading,
   .home-faq__intro {
-    position: static;
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
   }
 
   .glass-plan__layout {
@@ -1775,6 +1787,12 @@
 @media (max-width: 640px) {
   .home-hero {
     min-height: 690px;
+  }
+
+  .home-testimonials__heading,
+  .home-faq__intro {
+    position: static;
+    top: auto;
   }
 
   .home-hero__container {

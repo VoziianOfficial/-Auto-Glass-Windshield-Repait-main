@@ -107,7 +107,7 @@
       section
     );
 
-    const current = qs(
+    const current = qsa(
       ".home-hero__slide-current",
       section
     );
@@ -261,20 +261,21 @@
     };
 
     const updateCounter = (swiper) => {
-      if (!current) return;
-
-      current.textContent = String(
-        swiper.realIndex + 1
-      ).padStart(2, "0");
+      current.forEach((item) => {
+        item.textContent = String(
+          swiper.realIndex + 1
+        ).padStart(2, "0");
+      });
     };
 
     const swiper = initSwiperOnce(
       element,
       {
         slidesPerView: 1,
+        slidesPerGroup: 1,
         speed: 1100,
 
-        loop: slides.length > 1,
+        loop: true,
 
         effect: "fade",
 
@@ -283,6 +284,7 @@
         },
 
         allowTouchMove: true,
+        simulateTouch: true,
 
         grabCursor: true,
 
@@ -295,8 +297,14 @@
             },
 
         navigation: {
-          nextEl: next,
-          prevEl: prev
+          nextEl: qsa(
+            ".home-hero__arrow--next",
+            section
+          ),
+          prevEl: qsa(
+            ".home-hero__arrow--prev",
+            section
+          )
         },
 
         keyboard: {
@@ -537,30 +545,21 @@
       section
     );
 
-    const useLoop = shouldLoopSlides(
-      count,
-      2.35
-    );
-
     initSwiperOnce(element, {
       speed: 760,
 
       spaceBetween: 20,
 
       slidesPerView: 1,
+      slidesPerGroup: 1,
 
       grabCursor: true,
+      simulateTouch: true,
 
       watchOverflow: true,
 
       
-
-
-
-
-
-      loop: useLoop,
-      rewind: !useLoop,
+      loop: true,
 
       navigation: {
         nextEl: next,
@@ -1002,24 +1001,20 @@
 
     if (!count) return;
 
-    const useLoop = shouldLoopSlides(
-      count,
-      2.45
-    );
-
     initSwiperOnce(element, {
       speed: 780,
 
       slidesPerView: 1,
+      slidesPerGroup: 1,
 
       spaceBetween: 18,
 
       grabCursor: true,
+      simulateTouch: true,
 
       watchOverflow: true,
 
-      loop: useLoop,
-      rewind: !useLoop,
+      loop: true,
 
       navigation: {
         nextEl: qs(
@@ -1282,23 +1277,22 @@
 
     if (!count) return;
 
-    const useLoop = count > 2;
-
     initSwiperOnce(element, {
       speed: 760,
 
       slidesPerView: 1,
+      slidesPerGroup: 1,
 
       spaceBetween: 20,
 
       autoHeight: false,
 
       grabCursor: true,
+      simulateTouch: true,
 
       watchOverflow: true,
 
-      loop: useLoop,
-      rewind: !useLoop,
+      loop: true,
 
       navigation: {
         nextEl: qs(

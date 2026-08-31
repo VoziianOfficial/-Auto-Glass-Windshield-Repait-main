@@ -698,7 +698,8 @@
   }
 
   .legal-sidebar {
-    position: static;
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
   }
 
   .legal-sidebar__box {

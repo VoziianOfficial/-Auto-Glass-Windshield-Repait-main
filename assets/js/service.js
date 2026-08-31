@@ -790,23 +790,19 @@
 
     if (!count) return;
 
-    const useLoop = shouldLoopSlides(
-      count,
-      3
-    );
-
     initSwiperOnce(
       swiperElement,
       {
         slidesPerView: 1,
+        slidesPerGroup: 1,
         spaceBetween: 18,
         speed: 760,
 
         grabCursor: true,
+        simulateTouch: true,
         watchOverflow: true,
 
-        loop: useLoop,
-        rewind: !useLoop,
+        loop: true,
 
         navigation: {
           nextEl: qs(
@@ -1098,23 +1094,19 @@
 
     if (!count) return;
 
-    const useLoop = shouldLoopSlides(
-      count,
-      2.45
-    );
-
     initSwiperOnce(
       swiperElement,
       {
         slidesPerView: 1,
+        slidesPerGroup: 1,
         spaceBetween: 18,
         speed: 780,
 
         grabCursor: true,
+        simulateTouch: true,
         watchOverflow: true,
 
-        loop: useLoop,
-        rewind: !useLoop,
+        loop: true,
 
         navigation: {
           nextEl: qs(
