@@ -12,7 +12,8 @@
 
 .service-main {
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   background: var(--color-white);
 }
 
@@ -336,7 +337,8 @@
 
 .service-feature {
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
   background: var(--color-off-white);
 }
 
@@ -732,7 +734,8 @@
 }
 
 .service-process__swiper {
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .process-card {
@@ -1073,7 +1076,8 @@
 }
 
 .service-gallery__swiper {
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .service-gallery__slide {

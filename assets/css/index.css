@@ -5,7 +5,8 @@
 
 .home-main {
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 
@@ -369,7 +370,8 @@
 }
 
 .home-services__swiper {
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .home-services__slide {
@@ -1014,7 +1016,8 @@
 }
 
 .home-gallery__swiper {
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .gallery-card {
@@ -1325,6 +1328,11 @@
 .home-testimonials__controls .swiper-button-prev,
 .home-testimonials__controls .swiper-button-next {
   position: static;
+}
+
+.home-testimonials__swiper {
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
 .testimonial-card {

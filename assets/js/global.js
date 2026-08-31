@@ -102,7 +102,10 @@
 
      
     qsa("[data-site-email], [data-site-email-link]").forEach((element) => {
-      if (element.hasAttribute("data-site-email")) {
+      if (
+        element.hasAttribute("data-site-email") &&
+        element.children.length === 0
+      ) {
         element.textContent = email;
       }
 
@@ -111,6 +114,13 @@
         email
       ) {
         element.href = `mailto:${email}`;
+
+        if (element.children.length > 0) {
+          element.setAttribute(
+            "aria-label",
+            `Email ${email}`
+          );
+        }
       }
     });
 

@@ -12,7 +12,8 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
   background: var(--color-white);
 }
 
@@ -116,7 +117,8 @@
 
 .legal-content {
   position: relative;
-  overflow: visible;
+  overflow-x: clip;
+  overflow-y: visible;
   background: var(--color-off-white);
 }
 
@@ -731,6 +733,21 @@
   .legal-contact-strip__meta {
     text-align: left;
   }
+
+  .legal-table-wrap {
+    overflow-x: clip;
+  }
+
+  .legal-table {
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .legal-table th,
+  .legal-table td {
+    overflow-wrap: anywhere;
+    word-break: normal;
+  }
 }
 
 
@@ -745,7 +762,7 @@
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     overflow-y: auto;
   }
 
@@ -758,7 +775,8 @@
 
   .legal-main {
     min-height: 100%;
-    overflow: visible;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .legal-hero {
@@ -783,7 +801,8 @@
   }
 
   .legal-content {
-    overflow: visible;
+    overflow-x: clip;
+    overflow-y: visible;
   }
 
   .legal-content__layout {
@@ -906,7 +925,7 @@
   .legal-table-wrap {
     max-width: 100%;
 
-    overflow-x: auto;
+    overflow-x: clip;
     overflow-y: hidden;
   }
 
