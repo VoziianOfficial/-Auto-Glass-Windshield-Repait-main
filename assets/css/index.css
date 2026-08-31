@@ -363,6 +363,168 @@
 
 
 
+.home-interactive-showcase {
+  padding-block: clamp(48px, 5vw, 72px);
+  background: var(--color-black);
+  color: var(--color-white);
+}
+
+.home-interactive-showcase__frame {
+  position: relative;
+  height: clamp(500px, 66svh, 680px);
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--color-dark);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-medium);
+}
+
+.home-interactive-showcase__image {
+  position: absolute;
+  inset: 0;
+  z-index: -4;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.025);
+  transition:
+    opacity 720ms ease,
+    transform 1300ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
+}
+
+.home-interactive-showcase__image.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.home-interactive-showcase__shade {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.24) 48%, rgba(0, 0, 0, 0.72)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.68));
+}
+
+.home-interactive-showcase__zones {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  height: 100%;
+}
+
+.home-interactive-showcase__zone {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  height: 100%;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: clamp(20px, 2.3vw, 34px);
+  overflow: hidden;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.05);
+  color: inherit;
+  transition:
+    background-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.home-interactive-showcase__zone + .home-interactive-showcase__zone {
+  border-left: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.home-interactive-showcase__zone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 34%, rgba(0, 0, 0, 0.74)),
+    linear-gradient(90deg, rgba(244, 37, 42, 0.18), transparent 54%);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.home-interactive-showcase__zone::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--color-red);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--transition-slow);
+}
+
+.home-interactive-showcase__zone:hover,
+.home-interactive-showcase__zone:focus-visible,
+.home-interactive-showcase__zone.is-active {
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.home-interactive-showcase__zone:hover::before,
+.home-interactive-showcase__zone:focus-visible::before,
+.home-interactive-showcase__zone.is-active::before {
+  opacity: 1;
+}
+
+.home-interactive-showcase__zone.is-active::after {
+  transform: scaleX(1);
+}
+
+.home-interactive-showcase__content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  max-width: 260px;
+  min-width: 0;
+  gap: 10px;
+  transform: translateY(8px);
+  transition: transform var(--transition);
+}
+
+.home-interactive-showcase__zone.is-active .home-interactive-showcase__content,
+.home-interactive-showcase__zone:hover .home-interactive-showcase__content,
+.home-interactive-showcase__zone:focus-visible .home-interactive-showcase__content {
+  transform: translateY(0);
+}
+
+.home-interactive-showcase__kicker,
+.home-interactive-showcase__title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.home-interactive-showcase__kicker {
+  font-size: 13px;
+  color: var(--color-red);
+}
+
+.home-interactive-showcase__title {
+  font-size: clamp(27px, 2.4vw, 42px);
+}
+
+.home-interactive-showcase__text {
+  display: block;
+  max-width: 230px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.76);
+}
+
+
+
+
+
+
 .home-services {
   position: relative;
   background: var(--color-off-white);
@@ -1674,6 +1836,18 @@
     min-height: 540px;
   }
 
+  .home-interactive-showcase__frame {
+    height: clamp(500px, 62svh, 620px);
+  }
+
+  .home-interactive-showcase__zone {
+    padding: 24px 20px;
+  }
+
+  .home-interactive-showcase__title {
+    font-size: clamp(25px, 3vw, 34px);
+  }
+
   .home-contact__layout {
     grid-template-columns: minmax(0, 0.7fr) minmax(390px, 0.8fr);
     gap: 55px;
@@ -1731,6 +1905,23 @@
   .home-blueprint__copy,
   .home-before-after__copy {
     justify-self: start;
+  }
+
+  .home-interactive-showcase {
+    padding-block: 56px;
+  }
+
+  .home-interactive-showcase__frame {
+    height: min(620px, calc(100svh - 112px));
+    min-height: 500px;
+  }
+
+  .home-interactive-showcase__zone {
+    padding: 22px 16px;
+  }
+
+  .home-interactive-showcase__text {
+    font-size: 13px;
   }
 
   .home-about__grid {
@@ -1875,6 +2066,60 @@
 
   .home-services__navigation {
     justify-content: flex-start;
+  }
+
+  .home-interactive-showcase {
+    padding-block: 42px;
+  }
+
+  .home-interactive-showcase__frame {
+    height: min(640px, calc(100svh - 84px));
+    min-height: 560px;
+  }
+
+  .home-interactive-showcase__zones {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-interactive-showcase__zone + .home-interactive-showcase__zone {
+    border-left: 0;
+  }
+
+  .home-interactive-showcase__zone:nth-child(even) {
+    border-left: 1px solid rgba(255, 255, 255, 0.22);
+  }
+
+  .home-interactive-showcase__zone:nth-child(n + 3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.22);
+  }
+
+  .home-interactive-showcase__shade {
+    background:
+      linear-gradient(90deg, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.28) 50%, rgba(0, 0, 0, 0.72)),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.78));
+  }
+
+  .home-interactive-showcase__zone {
+    padding: 18px 14px;
+  }
+
+  .home-interactive-showcase__content {
+    gap: 8px;
+  }
+
+  .home-interactive-showcase__kicker {
+    font-size: 11px;
+  }
+
+  .home-interactive-showcase__title {
+    font-size: clamp(22px, 6.2vw, 28px);
+    line-height: 0.98;
+  }
+
+  .home-interactive-showcase__text {
+    max-width: 150px;
+    font-size: 12px;
+    line-height: 1.4;
   }
 
   .home-about__media {
