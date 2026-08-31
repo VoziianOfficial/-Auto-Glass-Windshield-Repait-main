@@ -1381,15 +1381,21 @@
       section
     );
 
+    const isNarrow = win.matchMedia(
+      "(max-width: 900px)"
+    ).matches;
+
     if (content) {
       win.gsap.fromTo(
         content,
         {
-          x: 30,
+          x: isNarrow ? 0 : 30,
+          y: isNarrow ? 18 : 0,
           opacity: 0
         },
         {
           x: 0,
+          y: 0,
           opacity: 1,
           duration: 0.85,
           ease: "power3.out",
@@ -1407,11 +1413,13 @@
       win.gsap.fromTo(
         items,
         {
-          x: 18,
+          x: isNarrow ? 0 : 18,
+          y: isNarrow ? 12 : 0,
           opacity: 0
         },
         {
           x: 0,
+          y: 0,
           opacity: 1,
           duration: 0.55,
           stagger: 0.07,
