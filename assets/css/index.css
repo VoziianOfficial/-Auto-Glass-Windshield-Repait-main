@@ -1992,8 +1992,36 @@
 .home-contact__form-wrap {
   position: relative;
   padding: clamp(28px, 4vw, 50px);
-  background: var(--color-white);
+  overflow: hidden;
+  background:
+    linear-gradient(145deg, rgba(244, 37, 42, 0.055), transparent 34%),
+    var(--color-white);
   color: var(--color-black);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.28);
+}
+
+.home-contact__form-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-red), rgba(244, 37, 42, 0));
+}
+
+.home-contact__form-wrap::after {
+  content: "";
+  position: absolute;
+  right: 22px;
+  bottom: 22px;
+  width: 86px;
+  height: 1px;
+  background: rgba(10, 10, 10, 0.18);
+}
+
+.home-contact__form-wrap > * {
+  position: relative;
+  z-index: 1;
 }
 
 .home-contact__form-title {
@@ -2015,18 +2043,128 @@
 .home-contact .form-input,
 .home-contact .form-textarea,
 .home-contact .form-select {
+  border-color: rgba(10, 10, 10, 0.08);
   background: #f0f0ee;
+  font-weight: 600;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.52);
+}
+
+.home-contact .form-input:hover,
+.home-contact .form-textarea:hover,
+.home-contact .form-select:hover {
+  background: #f7f7f5;
+  border-color: rgba(10, 10, 10, 0.16);
+}
+
+.home-contact .form-input:focus,
+.home-contact .form-textarea:focus,
+.home-contact .form-select:focus {
+  background: var(--color-white);
+  border-color: var(--color-red);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 0 0 3px rgba(244, 37, 42, 0.11);
+}
+
+.home-contact .form-select {
+  appearance: none;
+  padding-right: 54px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-black) 50%),
+    linear-gradient(135deg, var(--color-black) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.12), rgba(10, 10, 10, 0.12));
+  background-position:
+    calc(100% - 27px) 50%,
+    calc(100% - 20px) 50%,
+    calc(100% - 48px) 50%;
+  background-size:
+    7px 7px,
+    7px 7px,
+    1px 26px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.home-contact .form-select:hover,
+.home-contact .form-select:focus {
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-red) 50%),
+    linear-gradient(135deg, var(--color-red) 50%, transparent 50%),
+    linear-gradient(90deg, rgba(244, 37, 42, 0.28), rgba(244, 37, 42, 0.28));
 }
 
 .home-contact .form-label {
   font-size: 13px;
+  color: rgba(10, 10, 10, 0.72);
 }
 
 .home-contact__privacy {
+  position: relative;
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 11px;
+  align-items: start;
   margin: 0;
+  padding-top: 2px;
   font-size: 11px;
   line-height: 1.55;
   color: #787878;
+}
+
+.home-contact__privacy-text {
+  min-width: 0;
+}
+
+.home-contact__privacy input {
+  appearance: none;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  margin: 1px 0 0;
+  flex: 0 0 20px;
+  cursor: pointer;
+  border: 1px solid rgba(10, 10, 10, 0.22);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.82), rgba(239, 239, 237, 0.95));
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.home-contact__privacy input::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 3px;
+  width: 6px;
+  height: 11px;
+  border-right: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
+  opacity: 0;
+  transform: rotate(42deg) scale(0.72);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition);
+}
+
+.home-contact__privacy input:hover {
+  border-color: rgba(10, 10, 10, 0.42);
+}
+
+.home-contact__privacy input:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(244, 37, 42, 0.13);
+}
+
+.home-contact__privacy input:checked {
+  border-color: var(--color-red);
+  background: var(--color-red);
+}
+
+.home-contact__privacy input:checked::after {
+  opacity: 1;
+  transform: rotate(42deg) scale(1);
 }
 
 .home-contact__privacy a {
