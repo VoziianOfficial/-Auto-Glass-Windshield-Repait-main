@@ -52,6 +52,36 @@
     }
   }
 
+  function isInitialized(element, key) {
+    return element?.dataset?.[key] === "true";
+  }
+
+  function markInitialized(element, key) {
+    if (element?.dataset) {
+      element.dataset[key] = "true";
+    }
+  }
+
+  function shouldLoopSlides(count, maxSlidesPerView) {
+    return count > Math.ceil(maxSlidesPerView * 2);
+  }
+
+  function initSwiperOnce(element, options) {
+    if (!element || !hasSwiper()) return null;
+
+    if (element.swiper) {
+      return element.swiper;
+    }
+
+    if (isInitialized(element, "swiperInitialized")) {
+      return null;
+    }
+
+    markInitialized(element, "swiperInitialized");
+
+    return new win.Swiper(element, options);
+  }
+
 
   
 
@@ -700,7 +730,12 @@
 
     if (!count) return;
 
-    new win.Swiper(
+    const useLoop = shouldLoopSlides(
+      count,
+      3
+    );
+
+    initSwiperOnce(
       swiperElement,
       {
         slidesPerView: 1,
@@ -710,8 +745,8 @@
         grabCursor: true,
         watchOverflow: true,
 
-        loop: count >= 6,
-        rewind: count < 6,
+        loop: useLoop,
+        rewind: !useLoop,
 
         navigation: {
           nextEl: qs(
@@ -760,6 +795,8 @@
     );
 
     sections.forEach((section) => {
+      if (isInitialized(section, "tabsInitialized")) return;
+
       const tabs = qsa(
         ".service-detail__tab",
         section
@@ -776,6 +813,8 @@
       ) {
         return;
       }
+
+      markInitialized(section, "tabsInitialized");
 
       const card = qs(
         ".service-detail__card",
@@ -995,7 +1034,12 @@
 
     if (!count) return;
 
-    new win.Swiper(
+    const useLoop = shouldLoopSlides(
+      count,
+      2.45
+    );
+
+    initSwiperOnce(
       swiperElement,
       {
         slidesPerView: 1,
@@ -1005,8 +1049,8 @@
         grabCursor: true,
         watchOverflow: true,
 
-        loop: count >= 5,
-        rewind: count < 5,
+        loop: useLoop,
+        rewind: !useLoop,
 
         navigation: {
           nextEl: qs(
@@ -1054,12 +1098,16 @@
     );
 
     sections.forEach((section) => {
+      if (isInitialized(section, "faqInitialized")) return;
+
       const items = qsa(
         ".service-faq__item",
         section
       );
 
       if (!items.length) return;
+
+      markInitialized(section, "faqInitialized");
 
       function closeItem(item) {
         const button = qs(

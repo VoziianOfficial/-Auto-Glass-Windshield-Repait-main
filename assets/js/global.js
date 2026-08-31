@@ -720,6 +720,15 @@
 
     if (!toggle || !menu) return;
 
+    if (
+      menu.dataset.menuInitialized ===
+      "true"
+    ) {
+      return;
+    }
+
+    menu.dataset.menuInitialized = "true";
+
     const closeMenu = () => {
       if (
         !menu.classList.contains(

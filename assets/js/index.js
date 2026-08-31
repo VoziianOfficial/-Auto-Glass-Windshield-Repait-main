@@ -45,6 +45,36 @@
     }
   }
 
+  function isInitialized(element, key) {
+    return element?.dataset?.[key] === "true";
+  }
+
+  function markInitialized(element, key) {
+    if (element?.dataset) {
+      element.dataset[key] = "true";
+    }
+  }
+
+  function shouldLoopSlides(count, maxSlidesPerView) {
+    return count > Math.ceil(maxSlidesPerView * 2);
+  }
+
+  function initSwiperOnce(element, options) {
+    if (!element || !hasSwiper()) return null;
+
+    if (element.swiper) {
+      return element.swiper;
+    }
+
+    if (isInitialized(element, "swiperInitialized")) {
+      return null;
+    }
+
+    markInitialized(element, "swiperInitialized");
+
+    return new win.Swiper(element, options);
+  }
+
 
   
 
@@ -56,12 +86,16 @@
 
     if (!section || !element || !hasSwiper()) return;
 
+    if (isInitialized(section, "heroSwiperInitialized")) return;
+
     const slides = qsa(
       ".home-hero__slide",
       element
     );
 
     if (!slides.length) return;
+
+    markInitialized(section, "heroSwiperInitialized");
 
     const next = qs(
       ".home-hero__arrow--next",
@@ -233,7 +267,7 @@
       ).padStart(2, "0");
     };
 
-    const swiper = new win.Swiper(
+    const swiper = initSwiperOnce(
       element,
       {
         slidesPerView: 1,
@@ -298,6 +332,8 @@
         }
       }
     );
+
+    if (!swiper) return;
 
     section.addEventListener(
       "mouseenter",
@@ -457,7 +493,12 @@
       section
     );
 
-    new win.Swiper(element, {
+    const useLoop = shouldLoopSlides(
+      count,
+      2.35
+    );
+
+    initSwiperOnce(element, {
       speed: 760,
 
       spaceBetween: 20,
@@ -474,8 +515,8 @@
 
 
 
-      loop: count >= 5,
-      rewind: count < 5,
+      loop: useLoop,
+      rewind: !useLoop,
 
       navigation: {
         nextEl: next,
@@ -655,6 +696,10 @@
     );
 
     if (!tabs.length || !panels.length) return;
+
+    if (isInitialized(section, "tabsInitialized")) return;
+
+    markInitialized(section, "tabsInitialized");
 
     const cardTitle = qs(
       "h3",
@@ -901,7 +946,12 @@
 
     if (!count) return;
 
-    new win.Swiper(element, {
+    const useLoop = shouldLoopSlides(
+      count,
+      2.45
+    );
+
+    initSwiperOnce(element, {
       speed: 780,
 
       slidesPerView: 1,
@@ -912,8 +962,8 @@
 
       watchOverflow: true,
 
-      loop: count >= 5,
-      rewind: count < 5,
+      loop: useLoop,
+      rewind: !useLoop,
 
       navigation: {
         nextEl: qs(
@@ -959,6 +1009,15 @@
     if (!sliders.length) return;
 
     sliders.forEach((slider) => {
+      if (
+        isInitialized(
+          slider,
+          "beforeAfterInitialized"
+        )
+      ) {
+        return;
+      }
+
       const before = qs(
         ".before-after__before",
         slider
@@ -971,6 +1030,11 @@
 
       if (!before || !handle) return;
 
+      markInitialized(
+        slider,
+        "beforeAfterInitialized"
+      );
+
       let active = false;
       let value = 50;
 
@@ -979,6 +1043,9 @@
           4,
           Math.min(96, percent)
         );
+
+        const ratio =
+          value / 100;
 
         before.style.width =
           `${value}%`;
@@ -989,6 +1056,21 @@
         slider.style.setProperty(
           "--before-position",
           `${value}%`
+        );
+
+        slider.style.setProperty(
+          "--before-ratio",
+          String(ratio)
+        );
+
+        slider.style.setProperty(
+          "--before-image-width",
+          `${100 / ratio}%`
+        );
+
+        slider.setAttribute(
+          "aria-valuenow",
+          String(Math.round(value))
         );
       };
 
@@ -1014,6 +1096,10 @@
         (event) => {
           active = true;
 
+          slider.classList.add(
+            "is-dragging"
+          );
+
           slider.setPointerCapture?.(
             event.pointerId
           );
@@ -1037,15 +1123,31 @@
 
       slider.addEventListener(
         "pointerup",
-        () => {
+        (event) => {
           active = false;
+
+          slider.classList.remove(
+            "is-dragging"
+          );
+
+          slider.releasePointerCapture?.(
+            event.pointerId
+          );
         }
       );
 
       slider.addEventListener(
         "pointercancel",
-        () => {
+        (event) => {
           active = false;
+
+          slider.classList.remove(
+            "is-dragging"
+          );
+
+          slider.releasePointerCapture?.(
+            event.pointerId
+          );
         }
       );
 
@@ -1087,6 +1189,16 @@
         "Compare damaged and repaired windshield"
       );
 
+      slider.setAttribute(
+        "aria-valuemin",
+        "4"
+      );
+
+      slider.setAttribute(
+        "aria-valuemax",
+        "96"
+      );
+
       update(50);
     });
   }
@@ -1115,7 +1227,9 @@
 
     if (!count) return;
 
-    new win.Swiper(element, {
+    const useLoop = count > 2;
+
+    initSwiperOnce(element, {
       speed: 760,
 
       slidesPerView: 1,
@@ -1128,8 +1242,8 @@
 
       watchOverflow: true,
 
-      loop: count > 2,
-      rewind: count <= 2,
+      loop: useLoop,
+      rewind: !useLoop,
 
       navigation: {
         nextEl: qs(
@@ -1165,12 +1279,16 @@
     );
 
     sections.forEach((section) => {
+      if (isInitialized(section, "faqInitialized")) return;
+
       const items = qsa(
         ".faq-item",
         section
       );
 
       if (!items.length) return;
+
+      markInitialized(section, "faqInitialized");
 
       const closeItem = (item) => {
         const button = qs(
