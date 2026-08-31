@@ -621,18 +621,18 @@ h4 {
 
   min-width: 0;
   align-items: center;
-  gap: 13px;
+  gap: 14px;
 
-  padding-right: 28px;
+  padding-right: 26px;
 
   border-right: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .site-header__logo {
-  width: 46px;
-  height: 46px;
+  width: 54px;
+  height: 54px;
 
-  flex: 0 0 46px;
+  flex: 0 0 54px;
 
   object-fit: contain;
 }
@@ -924,8 +924,43 @@ h4 {
   width: 100%;
   min-height: min-content;
   min-width: 0;
+  align-content: start;
 
   grid-template-columns: 1.3fr 0.7fr;
+}
+
+.mobile-menu__brand {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 16px;
+
+  grid-column: 1 / -1;
+
+  padding:
+    clamp(22px, 3vw, 34px)
+    clamp(30px, 6vw, 110px);
+
+  border-bottom: 1px solid var(--color-line-dark);
+}
+
+.mobile-menu__logo {
+  width: clamp(58px, 6vw, 76px);
+  height: clamp(58px, 6vw, 76px);
+
+  flex: 0 0 clamp(58px, 6vw, 76px);
+
+  object-fit: contain;
+}
+
+.mobile-menu__name {
+  max-width: 300px;
+
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 42px);
+  font-weight: 700;
+  line-height: 0.96;
+  text-transform: uppercase;
 }
 
 .mobile-menu__nav {
@@ -1459,14 +1494,16 @@ h4 {
 .site-footer__identity {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
 
   margin-bottom: 25px;
 }
 
 .site-footer__logo {
-  width: 50px;
-  height: 50px;
+  width: 64px;
+  height: 64px;
+
+  flex: 0 0 64px;
 
   object-fit: contain;
 }
@@ -1678,6 +1715,10 @@ html:not(.no-js) [data-aos="fade-right"] {
     grid-template-columns: 1fr;
   }
 
+  .mobile-menu__brand {
+    padding: 24px var(--gutter);
+  }
+
   .mobile-menu__nav {
     padding: 45px var(--gutter);
     border-right: 0;
@@ -1778,10 +1819,10 @@ html:not(.no-js) [data-aos="fade-right"] {
   }
 
   .site-header__logo {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
 
-    flex-basis: 38px;
+    flex-basis: 44px;
   }
 
   .site-header__name {
@@ -1806,9 +1847,30 @@ html:not(.no-js) [data-aos="fade-right"] {
     align-items: flex-start;
 
     padding:
-      42px
+      32px
       var(--gutter)
       55px;
+  }
+
+  .mobile-menu__brand {
+    gap: 12px;
+
+    padding:
+      18px
+      var(--gutter);
+  }
+
+  .mobile-menu__logo {
+    width: 52px;
+    height: 52px;
+
+    flex-basis: 52px;
+  }
+
+  .mobile-menu__name {
+    max-width: 180px;
+
+    font-size: 24px;
   }
 
   .mobile-menu__link {

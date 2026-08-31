@@ -335,6 +335,7 @@
 
 .service-feature {
   position: relative;
+  padding-block: clamp(42px, 4.8vw, 72px);
   overflow-x: clip;
   overflow-y: visible;
   background: var(--color-off-white);
@@ -343,12 +344,12 @@
 .service-feature__layout {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.55fr);
-  min-height: 640px;
+  min-height: clamp(500px, 45vw, 560px);
 }
 
 .service-feature__media {
   position: relative;
-  min-height: 640px;
+  min-height: clamp(500px, 45vw, 560px);
   overflow: hidden;
   background: #d5d5d2;
 }
@@ -364,19 +365,19 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(42px, 6vw, 88px);
+  padding: clamp(34px, 4vw, 58px);
   background: var(--color-dark);
   color: var(--color-white);
 }
 
 .service-feature__title {
-  margin-bottom: 25px;
-  font-size: clamp(42px, 4.5vw, 71px);
+  margin-bottom: 18px;
+  font-size: clamp(38px, 3.8vw, 60px);
 }
 
 .service-feature__copy {
   max-width: 510px;
-  margin-bottom: 31px;
+  margin-bottom: 22px;
   color: rgba(255, 255, 255, 0.61);
 }
 
@@ -390,7 +391,7 @@
   grid-template-columns: 38px minmax(0, 1fr);
   gap: 16px;
   align-items: start;
-  padding: 17px 0;
+  padding: 13px 0;
   border-bottom: 1px solid var(--color-line-dark);
 }
 
@@ -529,6 +530,7 @@
 
 .service-blueprint {
   position: relative;
+  padding-block: clamp(42px, 4.8vw, 72px);
   overflow: hidden;
   background: #101010;
   color: var(--color-white);
@@ -539,7 +541,7 @@
   grid-template-columns: minmax(0, 0.85fr) minmax(260px, 0.32fr);
   gap: 50px;
   align-items: end;
-  margin-bottom: 40px;
+  margin-bottom: 26px;
 }
 
 .service-blueprint__title {
@@ -555,7 +557,7 @@
 
 .service-blueprint__stage {
   position: relative;
-  min-height: min(660px, 62vw);
+  min-height: min(520px, 48vw);
   overflow: hidden;
   background: #171717;
   border: 1px solid rgba(255, 255, 255, 0.13);
@@ -670,11 +672,11 @@
 
 .service-blueprint__panel {
   position: absolute;
-  right: 28px;
-  bottom: 28px;
+  right: 20px;
+  bottom: 20px;
   z-index: 5;
-  width: min(390px, calc(100% - 56px));
-  padding: 25px;
+  width: min(360px, calc(100% - 40px));
+  padding: 20px;
   background: var(--color-white);
   color: var(--color-black);
 }
@@ -689,8 +691,8 @@
 }
 
 .service-blueprint__panel-title {
-  margin-bottom: 10px;
-  font-size: 30px;
+  margin-bottom: 8px;
+  font-size: 26px;
 }
 
 .service-blueprint__panel-text {
@@ -1456,11 +1458,12 @@
   }
 
   .service-feature__media {
-    min-height: 540px;
+    min-height: 360px;
   }
 
   .service-feature__content {
     min-height: auto;
+    padding: 36px var(--gutter);
   }
 
   .service-types__header,
@@ -1595,15 +1598,32 @@
   }
 
   .service-feature__media {
-    min-height: 410px;
+    min-height: 255px;
   }
 
   .service-feature__content {
-    padding: 35px 22px;
+    padding: 28px 20px;
   }
 
   .service-feature__title {
-    font-size: 43px;
+    margin-bottom: 14px;
+    font-size: 38px;
+  }
+
+  .service-feature__copy {
+    margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .service-feature__item {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 12px;
+    padding: 10px 0;
+  }
+
+  .service-feature__item-text {
+    font-size: 15px;
   }
 
   .service-types__grid {
@@ -1616,14 +1636,23 @@
   }
 
   .service-blueprint__stage {
-    min-height: 520px;
+    min-height: 390px;
   }
 
   .service-blueprint__panel {
     right: 14px;
     bottom: 14px;
     width: calc(100% - 28px);
-    padding: 19px;
+    padding: 16px;
+  }
+
+  .service-blueprint__panel-title {
+    font-size: 22px;
+  }
+
+  .service-blueprint__panel-text {
+    font-size: 12px;
+    line-height: 1.55;
   }
 
   .service-blueprint__marker {
