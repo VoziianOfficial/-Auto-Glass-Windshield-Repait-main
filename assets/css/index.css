@@ -24,6 +24,7 @@
 
 .home-hero__shell {
   position: relative;
+  width: 100%;
   min-height: inherit;
   padding-inline: 0;
 }
@@ -83,7 +84,11 @@
 
 .home-hero__container {
   position: relative;
-  width: 100%;
+  width: min(
+    calc(100% - (var(--gutter) * 2)),
+    var(--container)
+  );
+  margin-inline: auto;
   padding-top: clamp(110px, 13vh, 190px);
   padding-bottom: clamp(58px, 8vh, 105px);
 }
