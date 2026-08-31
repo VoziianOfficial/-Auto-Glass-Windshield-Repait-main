@@ -767,6 +767,128 @@
 
 
 
+  function initServiceHotspots() {
+    const sections = qsa(
+      ".service-hotspots"
+    );
+
+    sections.forEach((section) => {
+      if (isInitialized(section, "hotspotsInitialized")) return;
+
+      const items = qsa(
+        "[data-hotspot-item]",
+        section
+      );
+
+      const markers = qsa(
+        "[data-hotspot-marker]",
+        section
+      );
+
+      const lines = qsa(
+        "[data-hotspot-line]",
+        section
+      );
+
+      if (!items.length || !markers.length) return;
+
+      markInitialized(section, "hotspotsInitialized");
+
+      function activate(key) {
+        if (!key) return;
+
+        items.forEach((item) => {
+          const active =
+            item.dataset.hotspotItem === key;
+
+          item.classList.toggle(
+            "is-active",
+            active
+          );
+
+          item.setAttribute(
+            "aria-pressed",
+            active ? "true" : "false"
+          );
+        });
+
+        markers.forEach((marker) => {
+          const active =
+            marker.dataset.hotspotMarker === key;
+
+          marker.classList.toggle(
+            "is-active",
+            active
+          );
+
+          marker.setAttribute(
+            "aria-pressed",
+            active ? "true" : "false"
+          );
+        });
+
+        lines.forEach((line) => {
+          line.classList.toggle(
+            "is-active",
+            line.dataset.hotspotLine === key
+          );
+        });
+      }
+
+      function bind(element, key) {
+        element.addEventListener(
+          "pointerenter",
+          () => {
+            activate(key);
+          }
+        );
+
+        element.addEventListener(
+          "focus",
+          () => {
+            activate(key);
+          }
+        );
+
+        element.addEventListener(
+          "click",
+          () => {
+            activate(key);
+          }
+        );
+      }
+
+      items.forEach((item) => {
+        bind(
+          item,
+          item.dataset.hotspotItem
+        );
+      });
+
+      markers.forEach((marker) => {
+        bind(
+          marker,
+          marker.dataset.hotspotMarker
+        );
+      });
+
+      const initial =
+        items.find((item) =>
+          item.classList.contains(
+            "is-active"
+          )
+        ) || items[0];
+
+      activate(
+        initial.dataset.hotspotItem
+      );
+    });
+  }
+
+
+  
+
+
   function initProcessSwiper() {
     const section = qs(
       ".service-process"
@@ -1460,6 +1582,7 @@
       initFeatureMotion,
       initTypeCardsMotion,
       initBlueprint,
+      initServiceHotspots,
       initProcessSwiper,
       initDetailTabs,
       initBenefitsMotion,

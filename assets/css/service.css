@@ -753,6 +753,257 @@
 
 
 
+.service-hotspots {
+  position: relative;
+  padding-block: clamp(40px, 4.4vw, 68px);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.service-hotspots__layout {
+  display: grid;
+  grid-template-columns:
+    minmax(210px, 0.34fr)
+    minmax(280px, 0.46fr)
+    minmax(210px, 0.34fr);
+  gap: clamp(24px, 4.8vw, 72px);
+  align-items: center;
+}
+
+.service-hotspots__list {
+  display: grid;
+  gap: clamp(46px, 6vw, 86px);
+}
+
+.service-hotspots__list--left {
+  justify-items: end;
+}
+
+.service-hotspots__list--right {
+  justify-items: start;
+}
+
+.service-hotspots__item {
+  position: relative;
+  display: grid;
+  width: min(100%, 305px);
+  min-height: 126px;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 15px;
+  align-items: start;
+  padding: 18px 0;
+  color: var(--color-text);
+  text-align: left;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  transition:
+    color var(--transition),
+    border-color var(--transition),
+    transform var(--transition);
+}
+
+.service-hotspots__item:hover,
+.service-hotspots__item:focus-visible,
+.service-hotspots__item.is-active {
+  color: var(--color-red);
+  border-color: rgba(244, 37, 42, 0.44);
+}
+
+.service-hotspots__item:hover,
+.service-hotspots__item.is-active {
+  transform: translateY(-3px);
+}
+
+.service-hotspots__icon {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  color: var(--color-red);
+  border: 1px solid rgba(244, 37, 42, 0.24);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.service-hotspots__item.is-active .service-hotspots__icon,
+.service-hotspots__item:hover .service-hotspots__icon {
+  background: var(--color-red);
+  color: var(--color-white);
+  border-color: var(--color-red);
+  box-shadow: 0 14px 35px rgba(244, 37, 42, 0.18);
+}
+
+.service-hotspots__icon svg {
+  width: 23px;
+  height: 23px;
+}
+
+.service-hotspots__copy {
+  display: block;
+  min-width: 0;
+}
+
+.service-hotspots__title {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 1.8vw, 27px);
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.service-hotspots__text {
+  display: block;
+  max-width: 220px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-soft);
+  transition: color var(--transition);
+}
+
+.service-hotspots__item.is-active .service-hotspots__text,
+.service-hotspots__item:hover .service-hotspots__text {
+  color: var(--color-text);
+}
+
+.service-hotspots__stage {
+  position: relative;
+  min-height: clamp(390px, 42vw, 540px);
+  overflow: visible;
+  isolation: isolate;
+}
+
+.service-hotspots__stage::before {
+  content: "";
+  position: absolute;
+  inset: 6% 9%;
+  z-index: -1;
+  background:
+    linear-gradient(rgba(18, 18, 18, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 18, 18, 0.055) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse at center, #000 0 48%, transparent 72%);
+}
+
+.service-hotspots__image {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: min(76%, 390px);
+  height: auto;
+  max-height: 100%;
+  filter:
+    drop-shadow(0 26px 48px rgba(0, 0, 0, 0.12))
+    saturate(0.96);
+  transform: translate(-50%, -50%);
+}
+
+.service-hotspots__lines {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.service-hotspots__line {
+  fill: none;
+  stroke: rgba(20, 20, 20, 0.16);
+  stroke-width: 0.22;
+  stroke-linecap: round;
+  stroke-dasharray: 1.2 1.2;
+  vector-effect: non-scaling-stroke;
+  transition:
+    stroke var(--transition),
+    stroke-width var(--transition),
+    opacity var(--transition);
+}
+
+.service-hotspots__line.is-active {
+  stroke: var(--color-red);
+  stroke-width: 0.55;
+  opacity: 1;
+}
+
+.service-hotspots__marker {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-items: center;
+  background: rgba(10, 10, 10, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 6px rgba(10, 10, 10, 0.08),
+    0 8px 20px rgba(0, 0, 0, 0.14);
+  transform: translate(-50%, -50%);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition);
+}
+
+.service-hotspots__marker::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: var(--color-white);
+  border-radius: inherit;
+  transition:
+    background-color var(--transition),
+    transform var(--transition);
+}
+
+.service-hotspots__marker:hover,
+.service-hotspots__marker:focus-visible,
+.service-hotspots__marker.is-active {
+  background: var(--color-red);
+  border-color: var(--color-white);
+  box-shadow:
+    0 0 0 8px rgba(244, 37, 42, 0.15),
+    0 0 0 15px rgba(244, 37, 42, 0.08),
+    0 16px 36px rgba(244, 37, 42, 0.24);
+  transform: translate(-50%, -50%) scale(1.2);
+}
+
+.service-hotspots__marker.is-active::before,
+.service-hotspots__marker:hover::before {
+  background: var(--color-white);
+  transform: scale(0.72);
+}
+
+.service-hotspots__marker--glass {
+  top: 36%;
+  left: 47%;
+}
+
+.service-hotspots__marker--seal {
+  top: 58%;
+  left: 43%;
+}
+
+.service-hotspots__marker--camera {
+  top: 38%;
+  left: 53%;
+}
+
+.service-hotspots__marker--finish {
+  top: 62%;
+  left: 52%;
+}
+
+
+
+
+
+
 .service-process {
   position: relative;
   padding-bottom: clamp(36px, 3.5vw, 59px);
@@ -1473,6 +1724,22 @@
     grid-template-columns: minmax(0, 0.95fr) minmax(340px, 0.58fr);
   }
 
+  .service-hotspots__layout {
+    grid-template-columns:
+      minmax(190px, 0.34fr)
+      minmax(260px, 0.48fr)
+      minmax(190px, 0.34fr);
+    gap: 28px;
+  }
+
+  .service-hotspots__item {
+    width: 100%;
+  }
+
+  .service-hotspots__stage {
+    min-height: 480px;
+  }
+
   .service-benefits__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1557,6 +1824,30 @@
   .service-blueprint__copy,
   .service-benefits__copy {
     justify-self: start;
+  }
+
+  .service-hotspots__layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .service-hotspots__stage {
+    order: -1;
+    min-height: clamp(360px, 62vw, 500px);
+  }
+
+  .service-hotspots__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .service-hotspots__list--left,
+  .service-hotspots__list--right {
+    justify-items: stretch;
+  }
+
+  .service-hotspots__item {
+    min-height: 110px;
   }
 
   .service-types__grid {
@@ -1759,6 +2050,59 @@
   .service-blueprint__marker--3 {
     right: 14%;
     bottom: 33%;
+  }
+
+  .service-hotspots {
+    padding-block: 38px;
+  }
+
+  .service-hotspots__stage {
+    min-height: 350px;
+  }
+
+  .service-hotspots__image {
+    width: min(82%, 255px);
+  }
+
+  .service-hotspots__lines {
+    opacity: 0.52;
+  }
+
+  .service-hotspots__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 14px;
+  }
+
+  .service-hotspots__item {
+    min-height: 96px;
+    grid-template-columns: 39px minmax(0, 1fr);
+    gap: 13px;
+    padding: 14px 0;
+  }
+
+  .service-hotspots__item:hover,
+  .service-hotspots__item.is-active {
+    transform: none;
+  }
+
+  .service-hotspots__icon {
+    width: 39px;
+    height: 39px;
+  }
+
+  .service-hotspots__title {
+    font-size: 18px;
+  }
+
+  .service-hotspots__text {
+    max-width: none;
+    font-size: 11px;
+    line-height: 1.42;
+  }
+
+  .service-hotspots__marker {
+    width: 18px;
+    height: 18px;
   }
 
   .service-process__header,
