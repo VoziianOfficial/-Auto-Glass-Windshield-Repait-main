@@ -776,28 +776,6 @@
 
     menu.dataset.menuInitialized = "true";
 
-    const closeButton =
-      qs(".mobile-menu__close", menu);
-
-    const serviceItems =
-      qsa(".mobile-menu__services", menu);
-
-    const closeSubmenus = () => {
-      serviceItems.forEach((item) => {
-        const button =
-          qs(".mobile-menu__submenu-toggle", item);
-
-        item.classList.remove("is-open");
-
-        if (button) {
-          button.setAttribute(
-            "aria-expanded",
-            "false"
-          );
-        }
-      });
-    };
-
     const closeMenu = () => {
       if (
         !menu.classList.contains(
@@ -807,8 +785,6 @@
         unlockPageScroll();
         return;
       }
-
-      closeSubmenus();
 
       toggle.classList.remove(
         "is-active"
@@ -877,33 +853,6 @@
         }
       }
     );
-
-    if (closeButton) {
-      closeButton.addEventListener(
-        "click",
-        closeMenu
-      );
-    }
-
-    serviceItems.forEach((item) => {
-      const button =
-        qs(".mobile-menu__submenu-toggle", item);
-
-      if (!button) return;
-
-      button.addEventListener(
-        "click",
-        () => {
-          const isOpen =
-            item.classList.toggle("is-open");
-
-          button.setAttribute(
-            "aria-expanded",
-            isOpen ? "true" : "false"
-          );
-        }
-      );
-    });
 
     qsa("a", menu).forEach(
       (link) => {

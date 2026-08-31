@@ -244,6 +244,7 @@
 
 .service-overview {
   position: relative;
+  padding-bottom: clamp(36px, 3.5vw, 59px);
   background: var(--color-white);
 }
 
@@ -754,6 +755,7 @@
 
 .service-process {
   position: relative;
+  padding-bottom: clamp(36px, 3.5vw, 59px);
   overflow: hidden;
   background: var(--color-off-white);
 }
@@ -1517,6 +1519,11 @@
     gap: 35px;
   }
 
+  .section.service-overview,
+  .section.service-process {
+    padding-bottom: 38px;
+  }
+
   .service-overview__aside {
     position: sticky;
     top: calc(var(--header-height) + 24px);
@@ -1591,6 +1598,11 @@
 @media (max-width: 640px) {
   .service-hero {
     min-height: 560px;
+  }
+
+  .section.service-overview,
+  .section.service-process {
+    padding-bottom: 31px;
   }
 
   .service-overview__aside,

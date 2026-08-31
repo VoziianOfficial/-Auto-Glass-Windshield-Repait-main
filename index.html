@@ -238,25 +238,37 @@
               fill="none"
               aria-hidden="true"
             >
-              <path
-                d="M5.2 6.5h13.6c1.05 0 1.9.85 1.9 1.9v7.2c0 1.05-.85 1.9-1.9 1.9H5.2c-1.05 0-1.9-.85-1.9-1.9V8.4c0-1.05.85-1.9 1.9-1.9Z"
+              <rect
+                x="3"
+                y="5.5"
+                width="18"
+                height="13"
+                rx="4"
                 stroke="currentColor"
-                stroke-width="1.55"
+                stroke-width="1.45"
               />
 
               <path
-                d="m5.1 8.2 5.9 5.15c.58.5 1.42.5 2 0l5.9-5.15M5.8 16l4.1-3.55M18.2 16l-4.1-3.55"
+                d="M4.1 7.35c2.42 2.22 5.34 4.5 6.7 5.5a1.55 1.55 0 0 0 1.9 0c1.36-1 4.28-3.28 6.7-5.5"
                 stroke="currentColor"
-                stroke-width="1.55"
+                stroke-width="1.45"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
 
+              <path
+                d="M8.3 15.85h7.4"
+                stroke="currentColor"
+                stroke-width="1.3"
+                stroke-linecap="round"
+                opacity="0.4"
+              />
+
               <circle
                 class="header-action__accent"
-                cx="18.8"
-                cy="6.4"
-                r="2.15"
+                cx="19.2"
+                cy="5.6"
+                r="2.5"
               />
             </svg>
           </a>
@@ -310,24 +322,13 @@
         </span>
       </a>
 
-      <button
-        class="mobile-menu__close"
-        type="button"
-        aria-label="Close menu"
-      >
-        <span class="mobile-menu__close-line"></span>
-      </button>
-
       <nav
         class="mobile-menu__nav"
         aria-label="Expanded navigation"
       >
         <ul class="mobile-menu__list">
 
-          <li
-            class="mobile-menu__item"
-            style="--menu-item-index: 1;"
-          >
+          <li>
             <a
               class="mobile-menu__link"
               href="index.html"
@@ -336,10 +337,7 @@
             </a>
           </li>
 
-          <li
-            class="mobile-menu__item"
-            style="--menu-item-index: 2;"
-          >
+          <li>
             <a
               class="mobile-menu__link"
               href="#about"
@@ -348,42 +346,29 @@
             </a>
           </li>
 
-          <li
-            class="mobile-menu__item mobile-menu__services"
-            style="--menu-item-index: 3;"
-          >
-            <button
-              class="mobile-menu__link mobile-menu__submenu-toggle"
-              type="button"
-              aria-expanded="false"
+          <li>
+            <a
+              class="mobile-menu__link"
+              href="#"
+                    data-service-key="windshieldRepair"
+              data-service-label
             >
-              Services
-              <span class="mobile-menu__submenu-icon"></span>
-            </button>
-
-            <div class="mobile-menu__submenu">
-              <div class="mobile-menu__submenu-inner">
-                <a
-                  class="mobile-menu__submenu-link"
-                  href="#"
-                  data-service-key="windshieldRepair"
-                  data-service-label
-                >Service</a>
-
-                <a
-                  class="mobile-menu__submenu-link"
-                  href="#"
-                  data-service-key="windshieldReplacement"
-                  data-service-label
-                >Service</a>
-              </div>
-            </div>
+              Service
+            </a>
           </li>
 
-          <li
-            class="mobile-menu__item"
-            style="--menu-item-index: 4;"
-          >
+          <li>
+            <a
+              class="mobile-menu__link"
+              href="#"
+                    data-service-key="windshieldReplacement"
+              data-service-label
+            >
+              Service
+            </a>
+          </li>
+
+          <li>
             <a
               class="mobile-menu__link"
               href="#contact"
@@ -1461,6 +1446,183 @@
             type="button"
             aria-label="Next service"
           ></button>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    
+
+
+
+    <section class="section home-accordion">
+
+      <div class="container">
+
+        <div class="home-accordion__layout">
+
+          <div
+            class="home-accordion__content"
+            data-aos="fade-up"
+          >
+
+            <div class="kicker">
+              Premium vehicle care
+            </div>
+
+            <h2 class="home-accordion__title">
+              Complete auto
+              <span class="accent-script">
+                glass confidence.
+              </span>
+            </h2>
+
+            <div
+              class="home-accordion__list"
+              data-home-accordion
+            >
+
+              <article class="home-accordion__item is-open">
+
+                <button
+                  class="home-accordion__button"
+                  type="button"
+                  aria-expanded="true"
+                >
+                  <span class="home-accordion__question">
+                    How often should glass be inspected?
+                  </span>
+
+                  <span
+                    class="home-accordion__icon"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+
+                <div class="home-accordion__panel">
+                  <div class="home-accordion__panel-inner">
+                    <p>
+                      A quick check after highway driving,
+                      seasonal weather shifts or visible impact
+                      marks helps catch small chips before they
+                      become larger cracks.
+                    </p>
+                  </div>
+                </div>
+
+              </article>
+
+
+              <article class="home-accordion__item">
+
+                <button
+                  class="home-accordion__button"
+                  type="button"
+                  aria-expanded="false"
+                >
+                  <span class="home-accordion__question">
+                    What makes premium windshield service different?
+                  </span>
+
+                  <span
+                    class="home-accordion__icon"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+
+                <div class="home-accordion__panel">
+                  <div class="home-accordion__panel-inner">
+                    <p>
+                      The right approach considers glass clarity,
+                      sensor placement, fitment details and the
+                      way the windshield supports the vehicle's
+                      structure.
+                    </p>
+                  </div>
+                </div>
+
+              </article>
+
+
+              <article class="home-accordion__item">
+
+                <button
+                  class="home-accordion__button"
+                  type="button"
+                  aria-expanded="false"
+                >
+                  <span class="home-accordion__question">
+                    Can modern sensors affect replacement?
+                  </span>
+
+                  <span
+                    class="home-accordion__icon"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+
+                <div class="home-accordion__panel">
+                  <div class="home-accordion__panel-inner">
+                    <p>
+                      Yes. Cameras, rain sensors and heated
+                      zones can influence glass selection,
+                      installation planning and post-service
+                      checks.
+                    </p>
+                  </div>
+                </div>
+
+              </article>
+
+
+              <article class="home-accordion__item">
+
+                <button
+                  class="home-accordion__button"
+                  type="button"
+                  aria-expanded="false"
+                >
+                  <span class="home-accordion__question">
+                    When should damage be handled quickly?
+                  </span>
+
+                  <span
+                    class="home-accordion__icon"
+                    aria-hidden="true"
+                  ></span>
+                </button>
+
+                <div class="home-accordion__panel">
+                  <div class="home-accordion__panel-inner">
+                    <p>
+                      Damage near the driver's view, the glass
+                      edge or windshield-mounted technology is
+                      worth reviewing promptly before vibration
+                      and temperature changes make it worse.
+                    </p>
+                  </div>
+                </div>
+
+              </article>
+
+            </div>
+
+          </div>
+
+
+          <div
+            class="home-accordion__media"
+            data-aos="fade-left"
+            data-aos-delay="90"
+          >
+            <img
+              src="assets/images/home/accordion/premium-vehicle-studio.webp"
+              alt="Premium black vehicle photographed in a bright studio"
+              loading="lazy"
+            >
+          </div>
 
         </div>
 
@@ -3228,6 +3390,8 @@
   <script src="assets/js/index.js"></script>
 
   <script src="assets/js/home-interactive-showcase.js"></script>
+
+  <script src="assets/js/home-accordion.js"></script>
 
 </body>
 </html>
