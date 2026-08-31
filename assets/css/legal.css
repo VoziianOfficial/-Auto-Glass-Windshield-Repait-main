@@ -820,14 +820,14 @@
 
   body {
     overflow-x: visible;
-    overflow-y: auto;
+    overflow-y: visible;
   }
 
   body:not(.menu-open):not(.is-loading) {
     position: static;
     height: auto;
     min-height: 100%;
-    overflow-y: auto;
+    overflow-y: visible;
   }
 
   .legal-main {

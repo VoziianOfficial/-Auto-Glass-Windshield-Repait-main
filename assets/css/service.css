@@ -27,7 +27,8 @@
   min-height: min(680px, calc(82svh - var(--header-height)));
   display: flex;
   align-items: flex-end;
-  overflow: hidden;
+  overflow: clip;
+  contain: paint;
   isolation: isolate;
   background: var(--color-black);
   color: var(--color-white);
@@ -37,7 +38,8 @@
   position: absolute;
   inset: 0;
   z-index: -3;
-  overflow: hidden;
+  overflow: clip;
+  contain: paint;
 }
 
 .service-hero__media img {
@@ -192,7 +194,9 @@
 
 
 .service-marquee {
-  overflow: hidden;
+  max-width: 100%;
+  overflow: clip;
+  contain: paint;
   background: var(--color-red);
   color: var(--color-white);
 }

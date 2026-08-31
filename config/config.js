@@ -1,8 +1,4 @@
 
-
-
-
-
 window.SiteConfig = {
   companyName: "ClearShield Auto Glass",
 

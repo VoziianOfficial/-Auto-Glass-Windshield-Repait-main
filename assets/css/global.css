@@ -81,7 +81,7 @@ body {
   max-width: 100%;
   margin: 0;
   overflow-x: visible;
-  overflow-y: auto;
+  overflow-y: visible;
 
   background: var(--color-white);
   color: var(--color-text);
@@ -709,9 +709,10 @@ h4 {
 
 
 .site-header {
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
-  z-index: 1000;
+  z-index: 1200;
 
   width: 100%;
 
@@ -2378,12 +2379,6 @@ html:not(.no-js) [data-aos="fade-right"] {
   body {
     max-width: 100%;
     overflow-x: visible;
-  }
-
-  .home-main,
-  .service-main,
-  .legal-main {
-    overflow-x: clip;
   }
 
   :root {
