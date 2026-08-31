@@ -63,6 +63,12 @@
     return pageTitles[aliases[key] || key] || "";
   }
 
+  function getService(key) {
+    if (!key) return null;
+
+    return Config.services?.[key] || null;
+  }
+
 
   
 
@@ -95,10 +101,15 @@
     });
 
      
-    qsa("[data-site-email]").forEach((element) => {
-      element.textContent = email;
+    qsa("[data-site-email], [data-site-email-link]").forEach((element) => {
+      if (element.hasAttribute("data-site-email")) {
+        element.textContent = email;
+      }
 
-      if (element.tagName === "A" && email) {
+      if (
+        element.tagName === "A" &&
+        email
+      ) {
         element.href = `mailto:${email}`;
       }
     });
@@ -109,9 +120,7 @@
 
       image.src = logo;
 
-      if (!image.alt) {
-        image.alt = `${companyName} logo`;
-      }
+      image.alt = `${companyName} logo`;
     });
 
      
@@ -178,6 +187,46 @@
       ) {
         element.textContent =
           replaceTokens(String(value));
+      }
+    });
+
+     
+    qsa("[data-service-key]").forEach((element) => {
+      const service =
+        getService(element.dataset.serviceKey);
+
+      if (!service) return;
+
+      if (
+        element.tagName === "A" &&
+        service.url
+      ) {
+        element.href = service.url;
+      }
+
+      if (
+        element.tagName === "OPTION" &&
+        service.name
+      ) {
+        element.value = service.name;
+      }
+
+      if (
+        element.hasAttribute("data-service-name") &&
+        service.name
+      ) {
+        element.textContent = service.name;
+      }
+
+      if (
+        element.hasAttribute("data-service-label") &&
+        (
+          service.label ||
+          service.name
+        )
+      ) {
+        element.textContent =
+          service.label || service.name;
       }
     });
   }
@@ -978,7 +1027,7 @@
       );
 
     const key =
-      "clearshield-cookie-consent";
+      "site-cookie-consent";
 
     let saved = null;
 
@@ -1111,6 +1160,20 @@
 
     forms.forEach((form) => {
       let submitting = false;
+      const submitButton =
+        qs(
+          '[type="submit"]',
+          form
+        );
+
+      const submitLabel =
+        submitButton
+          ? qs("span", submitButton) ||
+            submitButton
+          : null;
+
+      const originalText =
+        submitLabel?.textContent || "";
 
       form.addEventListener(
         "submit",
@@ -1127,15 +1190,6 @@
             form.parentElement?.querySelector(
               ".form-status"
             );
-
-          const submitButton =
-            qs(
-              '[type="submit"]',
-              form
-            );
-
-          const originalText =
-            submitButton?.textContent || "";
 
           const showStatus = (
             message,
@@ -1170,7 +1224,14 @@
 
           if (submitButton) {
             submitButton.disabled = true;
-            submitButton.textContent =
+            submitButton.setAttribute(
+              "aria-busy",
+              "true"
+            );
+          }
+
+          if (submitLabel) {
+            submitLabel.textContent =
               "Sending...";
           }
 
@@ -1210,29 +1271,25 @@
               data =
                 JSON.parse(raw);
             } catch {
-              data = null;
+              throw new Error(
+                "Unable to send message. The PHP contact form is not available on this host."
+              );
             }
 
             const serverSuccess =
               response.ok &&
-              (
-                data?.success === true ||
-                /успешно отправлено/i.test(
-                  raw
-                ) ||
-                /success/i.test(raw)
-              );
+              data?.success === true;
 
             if (!serverSuccess) {
               throw new Error(
                 data?.message ||
-                "Unable to send message."
+                "Unable to send message. Please try again."
               );
             }
 
             showStatus(
               data?.message ||
-                "Успешно отправлено",
+                "Successfully sent",
               "success"
             );
 
@@ -1250,7 +1307,13 @@
               submitButton.disabled =
                 false;
 
-              submitButton.textContent =
+              submitButton.removeAttribute(
+                "aria-busy"
+              );
+            }
+
+            if (submitLabel) {
+              submitLabel.textContent =
                 originalText;
             }
           }

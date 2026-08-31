@@ -32,11 +32,13 @@ window.SiteConfig = {
   services: {
     windshieldRepair: {
       name: "Windshield Repair",
+      label: "Repair",
       url: "windshield-repair.html"
     },
 
     windshieldReplacement: {
       name: "Windshield Replacement",
+      label: "Replacement",
       url: "windshield-replacement.html"
     }
   }
